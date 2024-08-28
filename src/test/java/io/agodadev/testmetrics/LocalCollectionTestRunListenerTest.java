@@ -1,3 +1,5 @@
+package io.agodadev.testmetrics;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -17,11 +19,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CustomTestRunListenerTest {
+public class LocalCollectionTestRunListenerTest {
 
     private HttpClient mockHttpClient;
     private LocalCollectionTestRunListener listener;
-    private static final String API_ENDPOINT = "http://example.com/api/test-results";
     private ObjectMapper objectMapper;
 
     @Before
@@ -32,7 +33,7 @@ public class CustomTestRunListenerTest {
         when(mockHttpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockResponse);
 
-        listener = new LocalCollectionTestRunListener(API_ENDPOINT) {
+        listener = new LocalCollectionTestRunListener() {
             @Override
             protected HttpClient createHttpClient() {
                 return mockHttpClient;
@@ -61,11 +62,12 @@ public class CustomTestRunListenerTest {
         Mockito.verify(mockHttpClient).send(requestCaptor.capture(), any(HttpResponse.BodyHandler.class));
 
         HttpRequest capturedRequest = requestCaptor.getValue();
-        assertEquals(API_ENDPOINT, capturedRequest.uri().toString());
+        assertEquals("http://compilation-metrics/junit", capturedRequest.uri().toString());
         assertEquals("POST", capturedRequest.method());
         assertEquals("application/json", capturedRequest.headers().firstValue("Content-Type").orElse(null));
 
-        String jsonBody = capturedRequest.bodyPublisher().map(p -> new String((byte[])p.toString())).orElse("");
+        String jsonBody = capturedRequest.bodyPublisher().map(p -> new String(p.toString())).orElse("");
+
         JsonNode rootNode = objectMapper.readTree(jsonBody);
 
         assertNotNull(rootNode.get("id"));

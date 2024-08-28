@@ -1,3 +1,5 @@
+package io.agodadev.testmetrics;
+
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -17,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LocalCollectionTestRunListener extends RunListener {
+public abstract class LocalCollectionTestRunListener extends RunListener {
     private final String apiEndpoint;
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
@@ -26,7 +28,7 @@ public class LocalCollectionTestRunListener extends RunListener {
 
     public LocalCollectionTestRunListener() {
         this.apiEndpoint = getApiEndpoint("http://compilation-metrics/junit");
-        this.httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
+        this.httpClient = createHttpClient();
         this.objectMapper = new ObjectMapper();
         this.testCases = new HashMap<>();
     }
@@ -118,6 +120,10 @@ public class LocalCollectionTestRunListener extends RunListener {
             throw new RuntimeException("Failed to send test results. Status code: " + response.statusCode());
         }
     }
+
+    protected HttpClient createHttpClient(){
+        return HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
+    };
 
     private static class TestCaseInfo {
         String id;
