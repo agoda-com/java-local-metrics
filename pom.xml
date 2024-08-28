@@ -3,10 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yourcompany.testing</groupId>
-    <artifactId>custom-junit-listener</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
+  <groupId>io.agodadev</groupId>
+  <artifactId>testmetrics</artifactId>
+  <version>1.0.0</version>
+  
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A library for measuring and improving developer experience on local workstations.</description>
+  <url>https://github.com/agodadev/testmetrics</url>
+  
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -33,15 +38,6 @@
 </dependency>
     </dependencies>
 
-
-  <groupId>io.agodadev</groupId>
-  <artifactId>testmetrics</artifactId>
-  <version>1.0.0</version>
-  
-  <name>${project.groupId}:${project.artifactId}</name>
-  <description>A library for measuring and improving developer experience on local workstations.</description>
-  <url>https://github.com/agodadev/testmetrics</url>
-  
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -51,17 +47,17 @@
   
   <developers>
     <developer>
-      <name>Your Name</name>
-      <email>your.email@example.com</email>
-      <organization>Your Organization</organization>
-      <organizationUrl>http://www.example.com</organizationUrl>
+      <name>Joel Dickson</name>
+      <email>your.email@agoda.com</email>
+      <organization>agoda</organization>
+      <organizationUrl>http://www.agoda.com</organizationUrl>
     </developer>
   </developers>
   
   <scm>
-    <connection>scm:git:git://github.com/agodadev/testmetrics.git</connection>
-    <developerConnection>scm:git:ssh://github.com:agodadev/testmetrics.git</developerConnection>
-    <url>https://github.com/agodadev/testmetrics/tree/main</url>
+    <connection>scm:git@github.com:agoda-com/java-local-metrics.git</connection>
+    <developerConnection>scm:git:ssh://github.com:agoda-com/java-local-metrics.git</developerConnection>
+    <url>https://github.com/agoda-com/java-local-metrics/tree/main</url>
   </scm>
   
   <distributionManagement>
