@@ -11,6 +11,12 @@ import org.mockito.Mockito;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -66,9 +72,7 @@ public class LocalCollectionTestRunListenerTest {
         assertEquals("POST", capturedRequest.method());
         assertEquals("application/json", capturedRequest.headers().firstValue("Content-Type").orElse(null));
 
-        String jsonBody = capturedRequest.bodyPublisher().map(p -> new String(p.toString())).orElse("");
-
-        JsonNode rootNode = objectMapper.readTree(jsonBody);
+        JsonNode rootNode = HttpRequestBodyParser.parseBody(capturedRequest);
 
         assertNotNull(rootNode.get("id"));
         assertNotNull(rootNode.get("userName"));
@@ -83,11 +87,11 @@ public class LocalCollectionTestRunListenerTest {
         assertTrue(testCasesNode.isArray());
         assertEquals(2, testCasesNode.size());
 
-        JsonNode testCase1 = testCasesNode.get(0);
+        JsonNode testCase1 = testCasesNode.get(1);
         assertEquals("Passed", testCase1.get("result").asText());
         assertEquals("testMethod1", testCase1.get("methodname").asText());
 
-        JsonNode testCase2 = testCasesNode.get(1);
+        JsonNode testCase2 = testCasesNode.get(0);
         assertEquals("Failed", testCase2.get("result").asText());
         assertEquals("testMethod2", testCase2.get("methodname").asText());
     }
@@ -99,4 +103,5 @@ public class LocalCollectionTestRunListenerTest {
         @Test
         public void testMethod2() {}
     }
+
 }

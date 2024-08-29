@@ -54,7 +54,10 @@ public abstract class LocalCollectionTestRunListener extends RunListener {
         if (testCase != null) {
             testCase.endTime = Instant.now();
             testCase.duration = Duration.between(testCase.startTime, testCase.endTime).toMillis();
-            testCase.result = "Passed";
+            if(testCase.result == "Unknown")
+            {
+                testCase.result = "Passed";
+            }
         }
     }
 
