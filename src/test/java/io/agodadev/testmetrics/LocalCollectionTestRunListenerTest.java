@@ -1,5 +1,6 @@
 package io.agodadev.testmetrics;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -11,14 +12,6 @@ import org.mockito.Mockito;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,12 +22,11 @@ public class LocalCollectionTestRunListenerTest {
 
     private HttpClient mockHttpClient;
     private LocalCollectionTestRunListener listener;
-    private ObjectMapper objectMapper;
 
     @Before
     public void setUp() throws Exception {
         mockHttpClient = mock(HttpClient.class);
-        HttpResponse<String> mockResponse = mock(HttpResponse.class);
+        var mockResponse = mock(HttpResponse.class);
         when(mockResponse.statusCode()).thenReturn(200);
         when(mockHttpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockResponse);
@@ -46,7 +38,6 @@ public class LocalCollectionTestRunListenerTest {
             }
         };
 
-        objectMapper = new ObjectMapper();
     }
 
     @Test
