@@ -8,6 +8,10 @@ The Developer Experience Metrics Library is an open-source Java tool designed to
 
 - **Test Execution Metrics**: Capture detailed information about JUnit test runs, including execution time, pass/fail status, and system resource usage during tests.
 
+## Requirements
+
+Minimum Java Version 11
+
 ## Installation
 
 ### Maven
