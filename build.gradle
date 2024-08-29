@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'io.agodadev'
+version = '1.0.0'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'testmetrics'
+                description = 'A library for measuring and improving developer experience on local workstations.'
+                url = 'https://github.com/agodadev/testmetrics'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        name = 'Joel Dickson'
+                        email = 'your.email@agoda.com'
+                        organization = 'agoda'
+                        organizationUrl = 'http://www.agoda.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git@github.com:agoda-com/java-local-metrics.git'
+                    developerConnection = 'scm:git:ssh://github.com:agoda-com/java-local-metrics.git'
+                    url = 'https://github.com/agoda-com/java-local-metrics/tree/main'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "dummy"
+                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "dummy"
+            }
+        }
+    }
+}
+
+
+signing {
+    def signingKey = System.getenv("GPG_SIGNING_KEY")
+    def signingPassword = System.getenv("GPG_SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
+}
+
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
