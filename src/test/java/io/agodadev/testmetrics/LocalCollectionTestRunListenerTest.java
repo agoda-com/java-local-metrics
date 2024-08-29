@@ -87,7 +87,7 @@ public class LocalCollectionTestRunListenerTest {
         assertEquals("testMethod2", testCase2.get("methodname").asText());
     }
 
-    private static class TestClass {
+    public static class TestClass {
         @Test
         public void testMethod1() {}
 
