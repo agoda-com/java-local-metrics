@@ -49,15 +49,6 @@ Add the following VM option to your JUnit run configuration:
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to all the contributors who have helped shape this project.
-- Special thanks to the JUnit team for their excellent testing framework.
-
 ---
 
 Happy coding, and may your development experience be ever improving!
