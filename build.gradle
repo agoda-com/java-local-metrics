@@ -67,7 +67,7 @@ signing {
 
 jreleaser {
     project {
-        website = 'https://github.com/yourusername/testmetrics'
+        website = 'https://github.com/agoda-com/java-local-metrics'
         authors = ['Your Name']
         license = 'Apache-2.0'
         inceptionYear = '2023'
@@ -94,12 +94,14 @@ jreleaser {
     deploy {
         maven {
             nexus2 {
-                create("maven-central") {
+                app {
                     active = "RELEASE"
-                    url = "https://s01.oss.sonatype.org/service/local"
+                    url = 'https://s01.oss.sonatype.org/service/local'
+                    setPassword(findProperty("signingPassword")) //todo: ทำพรุ่งนี้
                     closeRepository = true
                     releaseRepository = true
                     sign = true  // Ensures signing is active for maven-central deploys
+                    snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
                     stagingRepositories = ["build/staging-deploy"]
                 }
             }
