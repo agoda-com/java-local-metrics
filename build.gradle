@@ -73,24 +73,6 @@ publishing {
     }
 }
 
-task echoEnvVar {
-    doLast {
-        def envVar = System.getenv("MAVEN_USERNAME") ?: ""
-        if (envVar.length() > 4) {
-            def firstFour = envVar.substring(0, 4)
-            def masked = firstFour + "*".repeat(envVar.length() - 4)
-            println "Masked MAVEN_USERNAME: $masked"
-        } else {
-            println "MAVEN_USERNAME is too short to mask."
-        }
-    }
-}
-
-
-tasks.register('publish') {
-    dependsOn echoEnvVar
-}
-
 
 signing {
     def signingKey = System.getenv("GPG_SIGNING_KEY")
