@@ -2,9 +2,9 @@ name: Java CI with Gradle and Maven Central Upload
 
 on:
   push:
-    branches: [ main ]
+    branches: [ fix-unnable-publish-issue ]
   pull_request:
-    branches: [ main ]
+    branches: [ fix-unnable-publish-issue ]
   release:
     types: [created]
 
