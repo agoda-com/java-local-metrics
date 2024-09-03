@@ -73,7 +73,7 @@ publishing {
     }
 }
 
-task echoMessage {
+task echoEnvVar {
     doLast {
         def envVar = System.getenv("MAVEN_USERNAME") ?: ""
         if (envVar.length() > 4) {
@@ -85,7 +85,10 @@ task echoMessage {
         }
     }
 }
-publish.dependsOn echoEnvVar
+
+tasks.named('publish') {
+    dependsOn echoEnvVar
+}
 
 
 signing {
