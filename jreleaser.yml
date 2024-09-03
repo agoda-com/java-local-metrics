@@ -1,0 +1,57 @@
+project:
+  name: testmetrics
+  description: A library for measuring and improving developer experience on local workstations.
+  version: 1.0.0
+  authors:
+    - Joel Dickson
+  license: Apache-2.0
+  links:
+    homepage: "https://github.com/agodadev/testmetrics"
+    repository: "https://github.com/agoda-com/java-local-metrics.git"
+
+release:
+  github:
+    owner: agodadev
+    name: testmetrics
+    token: {{ secrets.GITHUB_TOKEN }}
+
+signing:
+  active: always
+  armored: true
+  key:
+    id: {{ secrets.GPG_SIGNING_KEY_ID }}
+    passphrase: {{ secrets.GPG_SIGNING_PASSWORD }}
+
+files:
+  - input: build/libs/testmetrics-1.0.0.jar
+    platform: universal
+
+distributions:
+  java:
+    groupId: io.agodadev
+    artifactId: testmetrics
+    version: {{projectVersion}}
+    description: A library for measuring and improving developer experience on local workstations.
+    url: "https://github.com/agodadev/testmetrics"
+    license:
+      name: The Apache License, Version 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.txt
+    developers:
+      - id: joeldickson
+        name: Joel Dickson
+        email: your.email@agoda.com
+        organization: agoda
+        organizationUrl: http://www.agoda.com
+    scm:
+      url: https://github.com/agoda-com/java-local-metrics.git
+      connection: scm:git:git://github.com/agoda-com/java-local-metrics.git
+      developerConnection: scm:git:ssh://github.com:agoda-com/java-local-metrics.git
+
+deploy:
+  maven:
+    deployer:
+      active: always
+      url: https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
+      snapshotUrl: https://s01.oss.sonatype.org/content/repositories/snapshots/
+      username: {{ secrets.OSSRH_USERNAME }}
+      password: {{ secrets.OSSRH_TOKEN }}
