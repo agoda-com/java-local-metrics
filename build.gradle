@@ -23,11 +23,16 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    
+    // Add JUnit 4 dependency for the classes you are using
+    testImplementation 'junit:junit:4.13.2'
+    
+    // If you want to use JUnit 5 for other tests, keep these dependencies
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    
-    // Add JUnit 4 dependency to resolve the errors
-    testImplementation 'junit:junit:4.13.2'
+
+    // Add Mockito for mocking in tests
+    testImplementation 'org.mockito:mockito-core:4.0.0'
 }
 
 test {
@@ -57,7 +62,7 @@ publishing {
                 }
                 scm {
                     connection = 'scm:git:git://github.com/yourusername/testmetrics.git'
-                    developerConnection = 'scm:git:ssh://github.com/yourusername/testmetrics.git'
+                    developerConnection = 'scm:git:ssh://github.com:yourusername/testmetrics.git'
                     url = 'https://github.com/yourusername/testmetrics/tree/main'
                 }
             }
