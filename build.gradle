@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'org.jreleaser' version '1.5.0'  // Use the latest available version
+    id 'org.jreleaser' version '1.5.0'
 }
 
 group = 'io.agodadev'
@@ -23,8 +23,10 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
 }
 
 test {
@@ -54,7 +56,7 @@ publishing {
                 }
                 scm {
                     connection = 'scm:git:git://github.com/yourusername/testmetrics.git'
-                    developerConnection = 'scm:git:ssh://github.com:yourusername/testmetrics.git'
+                    developerConnection = 'scm:git:ssh://github.com/yourusername/testmetrics.git'
                     url = 'https://github.com/yourusername/testmetrics/tree/main'
                 }
             }
@@ -63,22 +65,20 @@ publishing {
 }
 
 signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
+    useInMemoryPgpKeys(findProperty("signingKey"), findProperty("signingPassword"))
     sign publishing.publications.mavenJava
 }
 
 jreleaser {
     project {
         website = 'https://github.com/yourusername/testmetrics'
-        authors = ['Joel Dickson']
+        authors = ['Your Name']
         license = 'Apache-2.0'
-        extraProperties.put('inceptionYear', '2023')
+        inceptionYear = '2023'  // Corrected the property
     }
     release {
         github {
-            repoOwner = 'dicko2'
+            repoOwner = 'dicko2'  // Ensure this matches your GitHub account
             name = 'testmetrics'
             tagName = "v{{projectVersion}}"
             releaseName = "{{projectName}} {{projectVersion}}"
@@ -91,10 +91,8 @@ jreleaser {
     signing {
         active = 'always'  // Enables signing for all releases
         armored = true
-        key {
-            id = findProperty("signingKeyId")
-            passphrase = findProperty("signingPassword")
-        }
+        setKey(findProperty("signingKeyId"))  // Correct usage of setting the key ID
+        setPassphrase(findProperty("signingPassword"))  // Correct usage of setting the passphrase
     }
     deploy {
         maven {
@@ -104,6 +102,7 @@ jreleaser {
                     url = "https://s01.oss.sonatype.org/service/local"
                     closeRepository = true
                     releaseRepository = true
+                    sign = true  // This requires the signing block to be configured
                     stagingRepositories = ["build/staging-deploy"]
                 }
             }
