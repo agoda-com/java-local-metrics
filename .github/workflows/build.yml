@@ -38,6 +38,13 @@ jobs:
           name: test-report
           path: build/reports
 
+      - name: Debug Environment Variables
+        run: |
+          echo "MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}"
+          echo "MAVEN_PASSWORD: [REDACTED]"
+          echo "GPG_SIGNING_KEY: [REDACTED]"
+          echo "GPG_SIGNING_PASSWORD: [REDACTED]"
+
       - name: Publish to Maven Central
         run: |
           ./gradlew publish
