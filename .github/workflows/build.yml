@@ -36,4 +36,4 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-        run: ./gradlew jreleaserFullRelease
+        run: ./gradlew jreleaserRelease
