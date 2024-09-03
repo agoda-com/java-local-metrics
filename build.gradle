@@ -86,7 +86,8 @@ task echoEnvVar {
     }
 }
 
-tasks.named('publish') {
+
+tasks.register('publish') {
     dependsOn echoEnvVar
 }
 
