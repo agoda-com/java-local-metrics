@@ -69,6 +69,8 @@ publishing {
                 username = System.getenv("MAVEN_USERNAME") ?: ""
                 password = System.getenv("MAVEN_PASSWORD") ?: ""
             }
+            // print credentials for debugging
+            println("MAVEN_USERNAME: " + System.getenv("MAVEN_USERNAME"))
         }
     }
 }
