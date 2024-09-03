@@ -88,6 +88,14 @@ jreleaser {
             }
         }
     }
+    signing {
+        active = 'always'  // Enables signing for all releases
+        armored = true
+        key {
+            id = findProperty("signingKeyId")
+            passphrase = findProperty("signingPassword")
+        }
+    }
     deploy {
         maven {
             nexus2 {
