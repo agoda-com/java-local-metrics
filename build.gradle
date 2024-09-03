@@ -72,7 +72,7 @@ signing {
 jreleaser {
     project {
         website = 'https://github.com/yourusername/testmetrics'
-        authors = ['Your Name']
+        authors = ['Joel Dickson']
         license = 'Apache-2.0'
         extraProperties.put('inceptionYear', '2023')
     }

@@ -30,7 +30,6 @@ jobs:
         run: ./gradlew test
 
       - name: Release with JReleaser
-        if: github.event_name == 'release'
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
