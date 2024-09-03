@@ -33,8 +33,9 @@ jobs:
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORG_GRADLE_PROJECT_signingPublicKey: ${{ secrets.GPG_PUBLIC_KEY }}
-          ORG_GRADLE_PROJECT_signingPassphrase: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_signingPassphrase: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_signingSecretKey: ${{ secrets.GPG_SECRET_KEY }}
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-        run: ./gradlew jreleaserRelease
+        run: export JRELEASER_GPG_PASSPHRASE="5555" && ./gradlew jreleaserRelease
+        
