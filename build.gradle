@@ -103,16 +103,3 @@ jreleaser {
     }
 }
 
-jreleaserConfig {
-    environments {
-        env {
-            properties = [
-                    "ORG_GRADLE_PROJECT_signingKey": project.findProperty("signingKey") ?: "",
-                    "ORG_GRADLE_PROJECT_signingPassword": project.findProperty("signingPassword") ?: "",
-                    "JRELEASER_NEXUS2_USERNAME": project.findProperty("ossrhUsername") ?: "",
-                    "JRELEASER_NEXUS2_PASSWORD": project.findProperty("ossrhPassword") ?: "",
-                    "JRELEASER_GITHUB_TOKEN": project.findProperty("githubToken") ?: ""
-            ]
-        }
-    }
-}
