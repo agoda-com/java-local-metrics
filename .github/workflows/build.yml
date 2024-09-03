@@ -41,6 +41,7 @@ jobs:
       - name: Debug Environment Variables
         run: |
           echo "MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}"
+          echo "SAMPLE_SECRET: ${{ secrets.SAMPLE_SECRET }}"
           echo "MAVEN_PASSWORD: [REDACTED]"
           echo "GPG_SIGNING_KEY: [REDACTED]"
           echo "GPG_SIGNING_PASSWORD: [REDACTED]"
