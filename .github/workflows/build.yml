@@ -39,7 +39,6 @@ jobs:
           path: build/reports
 
       - name: Publish to Maven Central
-        if: github.event_name == 'release'
         run: |
           ./gradlew publish
         env:
