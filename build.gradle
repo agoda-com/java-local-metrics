@@ -74,11 +74,11 @@ jreleaser {
         website = 'https://github.com/yourusername/testmetrics'
         authors = ['Your Name']
         license = 'Apache-2.0'
-        inceptionYear = '2023'  // Corrected the property
+        inceptionYear = '2023'
     }
     release {
         github {
-            repoOwner = 'dicko2'  // Ensure this matches your GitHub account
+            repoOwner = 'dicko2'
             name = 'testmetrics'
             tagName = "v{{projectVersion}}"
             releaseName = "{{projectName}} {{projectVersion}}"
@@ -89,10 +89,10 @@ jreleaser {
         }
     }
     signing {
-        active = 'always'  // Enables signing for all releases
+        active = 'always'  // Ensures all artifacts are signed
         armored = true
-        setKey(findProperty("signingKeyId"))  // Correct usage of setting the key ID
-        setPassphrase(findProperty("signingPassword"))  // Correct usage of setting the passphrase
+        setKeyId(findProperty("signingKeyId"))  // Correct method for setting the key ID
+        setPassphrase(findProperty("signingPassword"))  // Correct method for setting the passphrase
     }
     deploy {
         maven {
@@ -102,7 +102,7 @@ jreleaser {
                     url = "https://s01.oss.sonatype.org/service/local"
                     closeRepository = true
                     releaseRepository = true
-                    sign = true  // This requires the signing block to be configured
+                    sign = true  // Ensures signing is active for maven-central deploys
                     stagingRepositories = ["build/staging-deploy"]
                 }
             }
