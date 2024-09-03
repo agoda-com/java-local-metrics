@@ -78,7 +78,6 @@ jreleaser {
     }
     release {
         github {
-            owner = 'dicko2'
             repoOwner = 'dicko2'
             name = 'testmetrics'
             tagName = "v{{projectVersion}}"
@@ -86,13 +85,6 @@ jreleaser {
             changelog {
                 formatted = "ALWAYS"
                 format = "- {{commitShortHash}} {{commitTitle}}"
-                categorize = true
-                labelers {
-                    label("feature", "Implemented enhancements:", "feat")
-                    label("bug fix", "Fixed bugs:", "fix")
-                    label("documentation", "Improved documentation:", "docs")
-                    label("maintenance", "Other changes:", "chore", "refactor", "test", "build")
-                }
             }
         }
     }
@@ -102,7 +94,6 @@ jreleaser {
                 create("maven-central") {
                     active = "RELEASE"
                     url = "https://s01.oss.sonatype.org/service/local"
-                    snapshotUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
                     closeRepository = true
                     releaseRepository = true
                     stagingRepositories = ["build/staging-deploy"]
