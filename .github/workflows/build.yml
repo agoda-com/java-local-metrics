@@ -37,5 +37,6 @@ jobs:
           ORG_GRADLE_PROJECT_signingSecretKey: ${{ secrets.GPG_SECRET_KEY }}
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-        run: export JRELEASER_GPG_PASSPHRASE="5555" && ./gradlew jreleaserRelease
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: ./gradlew jreleaserRelease
         
