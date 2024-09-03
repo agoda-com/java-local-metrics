@@ -88,12 +88,6 @@ jreleaser {
             }
         }
     }
-    signing {
-        active = 'always'  // Ensures all artifacts are signed
-        armored = true
-        setKeyId(findProperty("signingKeyId"))  // Correct method for setting the key ID
-        setPassphrase(findProperty("signingPassword"))  // Correct method for setting the passphrase
-    }
     deploy {
         maven {
             nexus2 {
