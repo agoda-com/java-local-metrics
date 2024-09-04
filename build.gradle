@@ -38,7 +38,7 @@ publishing {
             groupId = project.group.toString()
             artifactId = project.name
             version = project.version.toString()
-            from(components["java"])
+            from components.java
             pom {
                 name = 'TestMetrics'
                 description = project.description
@@ -71,8 +71,8 @@ publishing {
             def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots"
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
-                username = System.getenv("MAVEN_USERNAME") ?: ""
-                password = System.getenv("MAVEN_PASSWORD") ?: ""
+                username = System.getenv("MAVEN_USERNAME") ?: System.getenv('OSSRH_USERNAME')
+                password = System.getenv("MAVEN_PASSWORD") ?: System.getenv('OSSRH_PASSWORD')
             }
         }
     }
