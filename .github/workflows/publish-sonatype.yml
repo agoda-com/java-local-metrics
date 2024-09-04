@@ -7,6 +7,9 @@ jobs:
     name: gradle publish (Maven Central)
     runs-on: ubuntu-latest
     steps:
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Checkout project sources
         uses: actions/checkout@v4
 
@@ -15,6 +18,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
       - uses: gradle/actions/wrapper-validation@v3
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3.5.0
         with:
