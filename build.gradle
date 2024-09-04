@@ -74,8 +74,8 @@ jreleaser {
     }
     release {
         github {
-            repoOwner = 'dicko2'
-            name = 'testmetrics'
+            repoOwner = 'agoda-com'
+            name = 'java-local-metrics'
             tagName = "v{{projectVersion}}"
             releaseName = "{{projectName}} {{projectVersion}}"
             changelog {
