@@ -28,6 +28,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
+def stagingDirectory = rootProject.layout.buildDirectory.dir("staging")
 
 publishing {
     publications {
@@ -122,7 +123,7 @@ jreleaser {
                     releaseRepository = true
                     sign = true  // Ensures signing is active for maven-central deploys
                     snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                    stagingRepository('target/staging-deploy')
+                    stagingRepository(stagingDirectory.get().toString())
                 }
             }
         }
