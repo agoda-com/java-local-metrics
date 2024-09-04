@@ -97,6 +97,7 @@ jreleaser {
                 app {
                     active = "RELEASE"
                     url = 'https://s01.oss.sonatype.org/service/local'
+                    setUsername(findProperty("signingKey")) //todo: ทำพรุ่งนี้  https://jreleaser.org/guide/latest/reference/deploy/maven/nexus2.html
                     setPassword(findProperty("signingPassword")) //todo: ทำพรุ่งนี้
                     closeRepository = true
                     releaseRepository = true
