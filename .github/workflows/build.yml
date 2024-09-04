@@ -1,12 +1,7 @@
 name: Java CI with Gradle and JReleaser
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  release:
-    types: [created]
+  workflow_call:
 
 jobs:
   build:
@@ -28,13 +23,3 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
-
-      - name: Release with JReleaser
-        if: github.event_name == 'release'
-        env:
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-          JRELEASER_NEXUS2_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-        run: ./gradlew jreleaserFullRelease

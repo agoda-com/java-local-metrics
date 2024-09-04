@@ -1,0 +1,30 @@
+name: pipeline.yml
+on:
+  push:
+    branches: ["main"]
+    tags:
+      - "*"
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Release Library'
+        required: true
+        default: '...no release'
+        type: choice
+        options:
+          - '...no release'
+          - major
+          - minor
+          - patch
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+  publish_sonatype:
+    name: Publish artifact (Maven Central)
+    uses: ./.github/workflows/publish-sonatype.yml
+    secrets: inherit
+    needs: build
