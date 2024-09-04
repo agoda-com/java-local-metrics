@@ -37,5 +37,5 @@ jobs:
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
-        run: ./gradlew jreleaserRelease
+        run: ./gradlew jreleaserRelease --stacktrace
         
