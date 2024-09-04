@@ -103,7 +103,6 @@ jreleaser {
                     releaseRepository = true
                     sign = true  // Ensures signing is active for maven-central deploys
                     snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                    stagingRepositories = ["build/staging-deploy"]
                 }
             }
         }
