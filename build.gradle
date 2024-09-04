@@ -19,6 +19,9 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        url = layout.buildDirectory.dir('staging-deploy')
+    }
 }
 
 dependencies {
