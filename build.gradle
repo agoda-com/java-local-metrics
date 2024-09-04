@@ -1,8 +1,7 @@
 plugins {
-    id 'java-library'
+    id 'java'
     id 'maven-publish'
     id 'signing'
-    id 'org.jreleaser' version '1.3.1'
 }
 
 group = 'io.agodadev'
@@ -23,17 +22,16 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
             from components.java
             pom {
                 name = 'TestMetrics'
@@ -60,67 +58,21 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = version.endsWith('SNAPSHOT') ?
+                    uri("https://s01.oss.sonatype.org/content/repositories/snapshots") :
+                    uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("MAVEN_USERNAME") ?: System.getenv('OSSRH_USERNAME')
+                password = System.getenv("MAVEN_PASSWORD") ?: System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
 }
 
 signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
+    useInMemoryPgpKeys(System.getenv("GPG_PUBLIC_KEY"), System.getenv("GPG_SECRET_KEY"))
     sign publishing.publications.mavenJava
-}
-
-jreleaser {
-    project {
-        website = 'https://github.com/yourusername/testmetrics'
-        authors = ['Your Name']
-        license = 'Apache-2.0'
-        extraProperties.put('inceptionYear', '2023')
-    }
-    release {
-        github {
-            owner = 'yourusername'
-            name = 'testmetrics'
-            tagName = "v{{projectVersion}}"
-            releaseName = "{{projectName}} {{projectVersion}}"
-            changelog {
-                formatted = "ALWAYS"
-                format = "- {{commitShortHash}} {{commitTitle}}"
-                categorize = true
-                labelers {
-                    label("feature", "Implemented enhancements:", "feat")
-                    label("bug fix", "Fixed bugs:", "fix")
-                    label("documentation", "Improved documentation:", "docs")
-                    label("maintenance", "Other changes:", "chore", "refactor", "test", "build")
-                }
-            }
-        }
-    }
-    deploy {
-        maven {
-            nexus2 {
-                create("maven-central") {
-                    active = "RELEASE"
-                    url = "https://s01.oss.sonatype.org/service/local"
-                    snapshotUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                    closeRepository = true
-                    releaseRepository = true
-                    stagingRepositories = ["build/staging-deploy"]
-                }
-            }
-        }
-    }
-}
-
-jreleaserConfig {
-    environments {
-        env {
-            properties = [
-                    "ORG_GRADLE_PROJECT_signingKey": project.findProperty("signingKey") ?: "",
-                    "ORG_GRADLE_PROJECT_signingPassword": project.findProperty("signingPassword") ?: "",
-                    "JRELEASER_NEXUS2_USERNAME": project.findProperty("ossrhUsername") ?: "",
-                    "JRELEASER_NEXUS2_PASSWORD": project.findProperty("ossrhPassword") ?: "",
-                    "JRELEASER_GITHUB_TOKEN": project.findProperty("githubToken") ?: ""
-            ]
-        }
-    }
 }
