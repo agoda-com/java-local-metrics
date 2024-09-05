@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.agodadev'
-version = '0.1.2'
+version = '0.1.4'
 description = 'A library for measuring and improving developer experience on local workstations'
 
 java {
@@ -19,6 +19,9 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        url = layout.buildDirectory.dir('jreleaser')  // Updated to use jreleaser directory
+    }
 }
 
 dependencies {
@@ -27,9 +30,6 @@ dependencies {
     implementation 'org.mockito:mockito-core:4.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
-
-// Define the correct staging directory
-def stagingDirectory = layout.buildDirectory.dir("staging-deploy")
 
 publishing {
     publications {
@@ -67,14 +67,13 @@ signing {
     sign publishing.publications.mavenJava
 }
 
-// Task to prepare the staging directory with artifacts
 tasks.register('prepareStaging') {
     doLast {
-        def stagingDir = file(stagingDirectory.get().asFile)
+        def stagingDir = file("$buildDir/jreleaser")  // Use jreleaser directory
         if (!stagingDir.exists()) {
             stagingDir.mkdirs()
         }
-        // Copy artifacts (JARs, POMs, etc.) to the staging directory
+        // Copy or move your artifacts (JARs, POMs, etc.) to the staging directory
         copy {
             from("$buildDir/libs") // assuming your artifacts are in 'libs'
             into(stagingDir)
@@ -83,20 +82,8 @@ tasks.register('prepareStaging') {
     }
 }
 
-// Task to ensure the JReleaser output directory exists
-tasks.register('createJreleaserOutputDir') {
-    doLast {
-        def jreleaserDir = file("$buildDir/jreleaser")
-        if (!jreleaserDir.exists()) {
-            jreleaserDir.mkdirs()
-        }
-    }
-}
-
-// Ensure JReleaser runs after the staging and output directory are prepared
 tasks.named('jreleaserRelease') {
     dependsOn prepareStaging
-    dependsOn createJreleaserOutputDir
 }
 
 jreleaser {
@@ -137,7 +124,7 @@ jreleaser {
                     releaseRepository = true
                     sign = true
                     snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                    stagingRepository(stagingDirectory.get().toString()) // Correct staging path
+                    stagingRepository(file("$buildDir/jreleaser").toString())  // Updated to use jreleaser directory
                 }
             }
         }
