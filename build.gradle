@@ -19,9 +19,6 @@ java {
 
 repositories {
     mavenCentral()
-    maven {
-        url = layout.buildDirectory.dir('staging-deploy')
-    }
 }
 
 dependencies {
@@ -31,7 +28,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
-def stagingDirectory = rootProject.layout.buildDirectory.dir("staging")
+// Define the correct staging directory
+def stagingDirectory = layout.buildDirectory.dir("staging-deploy")
 
 publishing {
     publications {
@@ -69,13 +67,14 @@ signing {
     sign publishing.publications.mavenJava
 }
 
+// Task to prepare the staging directory with artifacts
 tasks.register('prepareStaging') {
     doLast {
-        def stagingDir = file("$buildDir/staging-deploy")
+        def stagingDir = file(stagingDirectory.get().asFile)
         if (!stagingDir.exists()) {
             stagingDir.mkdirs()
         }
-        // Copy or move your artifacts (JARs, POMs, etc.) to the staging directory
+        // Copy artifacts (JARs, POMs, etc.) to the staging directory
         copy {
             from("$buildDir/libs") // assuming your artifacts are in 'libs'
             into(stagingDir)
@@ -84,8 +83,20 @@ tasks.register('prepareStaging') {
     }
 }
 
+// Task to ensure the JReleaser output directory exists
+tasks.register('createJreleaserOutputDir') {
+    doLast {
+        def jreleaserDir = file("$buildDir/jreleaser")
+        if (!jreleaserDir.exists()) {
+            jreleaserDir.mkdirs()
+        }
+    }
+}
+
+// Ensure JReleaser runs after the staging and output directory are prepared
 tasks.named('jreleaserRelease') {
     dependsOn prepareStaging
+    dependsOn createJreleaserOutputDir
 }
 
 jreleaser {
@@ -108,11 +119,11 @@ jreleaser {
         }
     }
     signing {
-        active = 'always'  // Ensures all artifacts are signed
+        active = 'always'
         armored = true
-        setPublicKey(findProperty("signingPublicKey"))  // Correct method for setting the key ID
+        setPublicKey(findProperty("signingPublicKey"))
         setSecretKey(findProperty("signingSecretKey"))
-        setPassphrase(findProperty("signingPassword"))  // Correct method for setting the passphrase
+        setPassphrase(findProperty("signingPassword"))
     }
     deploy {
         maven {
@@ -124,9 +135,9 @@ jreleaser {
                     setPassword(findProperty("nexus2Password")) 
                     closeRepository = true
                     releaseRepository = true
-                    sign = true  // Ensures signing is active for maven-central deploys
+                    sign = true
                     snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                    stagingRepository(stagingDirectory.get().toString())
+                    stagingRepository(stagingDirectory.get().toString()) // Correct staging path
                 }
             }
         }
