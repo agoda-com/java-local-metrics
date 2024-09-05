@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'org.jreleaser' version '1.5.0'
+    id 'org.jreleaser' version '1.14.0' // Updated to version 1.14.0
 }
 
 group = 'io.agodadev'
@@ -20,7 +20,7 @@ java {
 repositories {
     mavenCentral()
     maven {
-        url = layout.buildDirectory.dir('jreleaser')  // Updated to use jreleaser directory
+        url = layout.buildDirectory.dir('jreleaser')  // Use jreleaser directory for local repository
     }
 }
 
@@ -60,6 +60,12 @@ publishing {
             }
         }
     }
+
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('jreleaser')  // Use jreleaser directory for local publishing
+        }
+    }
 }
 
 signing {
@@ -69,13 +75,12 @@ signing {
 
 tasks.register('prepareStaging') {
     doLast {
-        def stagingDir = file("$buildDir/jreleaser")  // Use jreleaser directory
+        def stagingDir = file("$buildDir/jreleaser")  // Use jreleaser directory for staging
         if (!stagingDir.exists()) {
             stagingDir.mkdirs()
         }
-        // Copy or move your artifacts (JARs, POMs, etc.) to the staging directory
         copy {
-            from("$buildDir/libs") // assuming your artifacts are in 'libs'
+            from("$buildDir/libs")  // assuming your artifacts are in 'libs'
             into(stagingDir)
             include('**/*.jar', '**/*.pom')
         }
@@ -106,25 +111,23 @@ jreleaser {
         }
     }
     signing {
-        active = 'always'
+        active = 'ALWAYS'
         armored = true
-        setPublicKey(findProperty("signingPublicKey"))
-        setSecretKey(findProperty("signingSecretKey"))
-        setPassphrase(findProperty("signingPassword"))
+        publicKey = findProperty("signingPublicKey")
+        secretKey = findProperty("signingSecretKey")
+        passphrase = findProperty("signingPassword")
     }
     deploy {
         maven {
-            nexus2 {
+            mavenCentral {
                 app {
                     active = "RELEASE"
-                    url = 'https://s01.oss.sonatype.org/service/local'
-                    setUsername(findProperty("nexus2Username")) 
-                    setPassword(findProperty("nexus2Password")) 
+                    url = 'https://central.sonatype.com/api/v1/publisher'
                     closeRepository = true
                     releaseRepository = true
-                    sign = true
-                    snapshotUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                    stagingRepository(file("$buildDir/jreleaser").toString())  // Updated to use jreleaser directory
+                    setUsername(findProperty("nexus2Username")) 
+                    setPassword(findProperty("nexus2Password")) 
+                    stagingRepository(file("$buildDir/jreleaser").absolutePath)  // Use jreleaser directory
                 }
             }
         }
