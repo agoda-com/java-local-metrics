@@ -7,7 +7,7 @@ project:
   license: Apache-2.0
   links:
     homepage: "https://github.com/agodadev/testmetrics"
-    repository: "https://github.com/agoda-com/java-local-metrics.git"
+#    repository: "https://github.com/agoda-com/java-local-metrics.git"
 
 release:
   github:
