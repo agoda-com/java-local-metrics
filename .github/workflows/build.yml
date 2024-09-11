@@ -64,7 +64,8 @@ jobs:
       # Create a release
       - name: Run JReleaser (dry-run)
         uses: jreleaser/release-action@v2
-        with: full-release --dry-run
+        with:
+          arguments: full-release --dry-run
         env:
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
