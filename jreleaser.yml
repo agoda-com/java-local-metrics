@@ -1,0 +1,39 @@
+project:
+  name: testmetrics
+  description: A library for measuring and improving developer experience on local workstations.
+  authors:
+    - Joel Dickson
+  license: Apache-2.0
+  links:
+    homepage: "https://github.com/agodadev/testmetrics"
+  java:
+    groupId: io.agodadev
+    artifactId: testmetrics
+    version: 11
+  maintainers:
+    - joeldickson
+  copyright: 2024 Agoda
+
+release:
+  github:
+    owner: agodadev
+    name: testmetrics
+
+signing:
+  active: always
+  armored: true
+
+distributions:
+  app:
+    type: JAVA_BINARY
+    artifacts:
+      - path: build/libs/{{projectName}}-{{projectVersion}}.jar
+
+deploy:
+  maven:
+    mavenCentral:
+      app:
+        active: ALWAYS
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - build/staging-deploy

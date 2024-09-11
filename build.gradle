@@ -1,126 +1,69 @@
+/** avoid using 'org.jreleaser' gradle plugins since it's conflict with target Java 11 version */
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'org.jreleaser' version '1.3.1'
 }
 
 group = 'io.agodadev'
-version = '0.1.0'
+// version: taken from build parameters
 description = 'A library for measuring and improving developer experience on local workstations'
 
 java {
     withJavadocJar()
     withSourcesJar()
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(11)  // To compatible with lib consumer
     }
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url = layout.buildDirectory.dir('staging-deploy')
+    }
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:4.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom {
-                name = 'TestMetrics'
-                description = project.description
-                url = 'https://github.com/yourusername/testmetrics'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'yourusername'
-                        name = 'Your Name'
-                        email = 'your.email@example.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/yourusername/testmetrics.git'
-                    developerConnection = 'scm:git:ssh://github.com:yourusername/testmetrics.git'
-                    url = 'https://github.com/yourusername/testmetrics/tree/main'
-                }
-            }
-        }
-    }
-}
+   publications {
+       mavenJava(MavenPublication) {
+           from components.java
+           pom {
+               name = 'java-local-metrics'
+               description = project.description
+               url = 'https://github.com/agoda-com/java-local-metrics'
+               licenses {
+                   license {
+                       name = 'The Apache License, Version 2.0'
+                       url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                   }
+               }
+               developers {
+                   developer {
+                       id = 'dicko2'
+                       name = 'Joel Dickson'
+                       email = 'maven@agoda.com'
+                   }
+               }
+               scm {
+                   connection = 'scm:git:git://github.com/agoda-com/java-local-metrics.git'
+                   developerConnection = 'scm:git:ssh://github.com/agoda-com/java-local-metrics.git'
+                   url = 'https://github.com/agoda-com/java-local-metrics/tree/main'
+               }
+           }
+       }
+   }
 
-signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
-}
-
-jreleaser {
-    project {
-        website = 'https://github.com/yourusername/testmetrics'
-        authors = ['Your Name']
-        license = 'Apache-2.0'
-        extraProperties.put('inceptionYear', '2023')
-    }
-    release {
-        github {
-            owner = 'yourusername'
-            name = 'testmetrics'
-            tagName = "v{{projectVersion}}"
-            releaseName = "{{projectName}} {{projectVersion}}"
-            changelog {
-                formatted = "ALWAYS"
-                format = "- {{commitShortHash}} {{commitTitle}}"
-                categorize = true
-                labelers {
-                    label("feature", "Implemented enhancements:", "feat")
-                    label("bug fix", "Fixed bugs:", "fix")
-                    label("documentation", "Improved documentation:", "docs")
-                    label("maintenance", "Other changes:", "chore", "refactor", "test", "build")
-                }
-            }
-        }
-    }
-    deploy {
-        maven {
-            nexus2 {
-                create("maven-central") {
-                    active = "RELEASE"
-                    url = "https://s01.oss.sonatype.org/service/local"
-                    snapshotUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                    closeRepository = true
-                    releaseRepository = true
-                    stagingRepositories = ["build/staging-deploy"]
-                }
-            }
-        }
-    }
-}
-
-jreleaserConfig {
-    environments {
-        env {
-            properties = [
-                    "ORG_GRADLE_PROJECT_signingKey": project.findProperty("signingKey") ?: "",
-                    "ORG_GRADLE_PROJECT_signingPassword": project.findProperty("signingPassword") ?: "",
-                    "JRELEASER_NEXUS2_USERNAME": project.findProperty("ossrhUsername") ?: "",
-                    "JRELEASER_NEXUS2_PASSWORD": project.findProperty("ossrhPassword") ?: "",
-                    "JRELEASER_GITHUB_TOKEN": project.findProperty("githubToken") ?: ""
-            ]
-        }
-    }
+   repositories {
+       maven {
+            url = layout.buildDirectory.dir('staging-deploy')
+       }
+   }
 }

@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Intellij
+.idea
+
 # Package Files #
 *.jar
 *.war
@@ -24,3 +27,4 @@ hs_err_pid*
 replay_pid*
 /.gradle/
 /build/
+/out/
