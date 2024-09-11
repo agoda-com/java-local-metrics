@@ -15,6 +15,7 @@ project:
 #    url: "https://github.com/agodadev/testmetrics"
   maintainers:
     - joeldickson
+  copyright: 2024 Agoda
 #  developers:
 #    - id: joeldickson
 #      name: Joel Dickson
@@ -46,8 +47,8 @@ distributions:
     type: JAVA_BINARY
     artifacts:
       - path: build/libs/testmetrics-1.0.0.jar
-      - path: build/libs/testmetrics-1.0.0-javadoc.jar
-      - path: build/libs/testmetrics-1.0.0-sources.jar
+#      - path: build/libs/testmetrics-1.0.0-javadoc.jar
+#      - path: build/libs/testmetrics-1.0.0-sources.jar
 #    scm:
 #      url: https://github.com/agoda-com/java-local-metrics.git
 #      connection: scm:git:git://github.com/agoda-com/java-local-metrics.git
