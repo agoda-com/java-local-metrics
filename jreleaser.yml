@@ -46,7 +46,7 @@ distributions:
   app:
     type: JAVA_BINARY
     artifacts:
-      - path: build/libs/testmetrics-1.0.0.jar
+      - path: build/libs/testmetrics-0.1.6.jar # TODO: versioning artifacts
 #      - path: build/libs/testmetrics-1.0.0-javadoc.jar
 #      - path: build/libs/testmetrics-1.0.0-sources.jar
 #    scm:
