@@ -20,7 +20,7 @@ java {
 repositories {
     mavenCentral()
     maven {
-        url = layout.buildDirectory.dir('jreleaser')  // Use jreleaser directory for local repository
+        url = layout.buildDirectory.dir('staging-deploy')
     }
 }
 
@@ -31,105 +31,39 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            from components.java
-//            pom {
-//                name = 'TestMetrics'
-//                description = project.description
-//                url = 'https://github.com/yourusername/testmetrics'
-//                licenses {
-//                    license {
-//                        name = 'The Apache License, Version 2.0'
-//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                    }
-//                }
-//                developers {
-//                    developer {
-//                        id = 'yourusername'
-//                        name = 'Your Name'
-//                        email = 'your.email@example.com'
-//                    }
-//                }
-//                scm {
-//                    connection = 'scm:git:git://github.com/yourusername/testmetrics.git'
-//                    developerConnection = 'scm:git:ssh://github.com/yourusername/testmetrics.git'
-//                    url = 'https://github.com/yourusername/testmetrics/tree/main'
-//                }
-//            }
-//        }
-//    }
-//
-//    repositories {
-//        maven {
-//            url = layout.buildDirectory.dir('jreleaser')  // Use jreleaser directory for local publishing
-//        }
-//    }
-//}
-//
-//signing {
-//    useInMemoryPgpKeys(findProperty("signingKey"), findProperty("signingPassword"))
-//    sign publishing.publications.mavenJava
-//}
-//
-//tasks.register('prepareStaging') {
-//    doLast {
-//        def stagingDir = file("$buildDir/jreleaser")  // Use jreleaser directory for staging
-//        if (!stagingDir.exists()) {
-//            stagingDir.mkdirs()
-//        }
-//        copy {
-//            from("$buildDir/libs")  // assuming your artifacts are in 'libs'
-//            into(stagingDir)
-//            include('**/*.jar', '**/*.pom')
-//        }
-//    }
-//}
-//
-//tasks.named('jreleaserRelease') {
-//    dependsOn prepareStaging
-//}
-//
-//jreleaser {
-//    project {
-//        website = 'https://github.com/agoda-com/java-local-metrics'
-//        authors = ['Your Name']
-//        license = 'Apache-2.0'
-//        inceptionYear = '2023'
-//    }
-//    release {
-//        github {
-//            repoOwner = 'agoda-com'
-//            name = 'java-local-metrics'
-//            tagName = "v{{projectVersion}}"
-//            releaseName = "{{projectName}} {{projectVersion}}"
-//            changelog {
-//                formatted = "ALWAYS"
-//                format = "- {{commitShortHash}} {{commitTitle}}"
-//            }
-//        }
-//    }
-//    signing {
-//        active = 'ALWAYS'
-//        armored = true
-//        publicKey = findProperty("signingPublicKey")
-//        secretKey = findProperty("signingSecretKey")
-//        passphrase = findProperty("signingPassword")
-//    }
-//    deploy {
-//        maven {
-//            mavenCentral {
-//                app {
-//                    active = "RELEASE"
-//                    url = 'https://central.sonatype.com/api/v1/publisher'
-//                    closeRepository = true
-//                    releaseRepository = true
-//                    setUsername(findProperty("nexus2Username"))
-//                    setPassword(findProperty("nexus2Password"))
-//                    stagingRepository(file("$buildDir/jreleaser").absolutePath)  // Use jreleaser directory
-//                }
-//            }
-//        }
-//    }
-//}
+publishing {
+   publications {
+       mavenJava(MavenPublication) {
+           from components.java
+           pom {
+               name = 'java-local-metrics'
+               description = project.description
+               url = 'https://github.com/agoda-com/java-local-metrics'
+               licenses {
+                   license {
+                       name = 'The Apache License, Version 2.0'
+                       url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                   }
+               }
+               developers {
+                   developer {
+                       id = 'dicko2'
+                       name = 'Joel Dickson'
+                       email = 'maven@agoda.com'
+                   }
+               }
+               scm {
+                   connection = 'scm:git:git://github.com/agoda-com/java-local-metrics.git'
+                   developerConnection = 'scm:git:ssh://github.com/agoda-com/java-local-metrics.git'
+                   url = 'https://github.com/agoda-com/java-local-metrics/tree/main'
+               }
+           }
+       }
+   }
+
+   repositories {
+       maven {
+            url = layout.buildDirectory.dir('staging-deploy')
+       }
+   }
+}
