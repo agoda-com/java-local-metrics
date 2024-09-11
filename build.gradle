@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.agodadev'
-version = '0.1.6'
+version = '0.0.1-SNAPSHOT'
 description = 'A library for measuring and improving developer experience on local workstations'
 
 java {

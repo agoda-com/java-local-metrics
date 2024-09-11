@@ -1,27 +1,20 @@
 project:
   name: testmetrics
   description: A library for measuring and improving developer experience on local workstations.
-  version: 1.0.0
+  version: 0.0.1-SNAPSHOT
   authors:
     - Joel Dickson
   license: Apache-2.0
   links:
     homepage: "https://github.com/agodadev/testmetrics"
-#    repository: "https://github.com/agoda-com/java-local-metrics.git"
   java:
     groupId: io.agodadev
     artifactId: testmetrics
     version: 11
-#    url: "https://github.com/agodadev/testmetrics"
   maintainers:
     - joeldickson
   copyright: 2024 Agoda
-#  developers:
-#    - id: joeldickson
-#      name: Joel Dickson
-#      email: your.email@agoda.com
-#      organization: agoda
-#      organizationUrl: http://www.agoda.com
+
 release:
   github:
     owner: agodadev
@@ -31,39 +24,16 @@ release:
 signing:
   active: always
   armored: true
-  mode: FILE
-  passphrase: 
-  publicKey: 
-  secretKey:
-
-#  key:
-#    id: {{ secrets.GPG_SIGNING_KEY_ID }}
-#    passphrase: {{ secrets.GPG_SIGNING_PASSWORD }}
-
-#files:
-#  - input: build/libs/testmetrics-1.0.0.jar
-#    platform: universal
+  # mode: FILE
+  # passphrase:
+  # publicKey:
+  # secretKey:
 
 distributions:
   app:
     type: JAVA_BINARY
     artifacts:
-      - path: build/libs/testmetrics-0.1.6.jar # TODO: versioning artifacts
-      # - path: build/libs/testmetrics-0.1.6-javadoc.jar
-      # - path: build/libs/testmetrics-1.0.6-sources.jar
-#    scm:
-#      url: https://github.com/agoda-com/java-local-metrics.git
-#      connection: scm:git:git://github.com/agoda-com/java-local-metrics.git
-#      developerConnection: scm:git:ssh://github.com:agoda-com/java-local-metrics.git
-
-#deploy:
-#  maven:
-#    deployer:
-#      active: always
-#      url: https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
-#      snapshotUrl: https://s01.oss.sonatype.org/content/repositories/snapshots/
-#      username: {{ secrets.OSSRH_USERNAME }}
-#      password: {{ secrets.OSSRH_TOKEN }}
+      - path: build/libs/testmetrics-0.0.1-SNAPSHOT.jar
 
 deploy:
   maven:
@@ -71,7 +41,5 @@ deploy:
       app:
         active: ALWAYS
         url: https://central.sonatype.com/api/v1/publisher
-        # closeRepository: true
-        # releaseRepository: false
         stagingRepositories:
           - build/staging-deploy
