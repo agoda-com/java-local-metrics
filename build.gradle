@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.agodadev'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 description = 'A library for measuring and improving developer experience on local workstations'
 
 java {
@@ -25,9 +25,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'  // Compatible with Java 11
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'junit:junit:4.12'
-    implementation 'org.mockito:mockito-core:4.8.1'
+    testImplementation 'org.mockito:mockito-core:4.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
 }
 
