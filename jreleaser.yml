@@ -24,7 +24,7 @@ release:
 signing:
   active: always
   armored: true
-  mode: FILE
+  # mode: FILE
   # passphrase:
   # publicKey:
   # secretKey:
