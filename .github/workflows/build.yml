@@ -28,6 +28,7 @@ jobs:
 
   release-dryrun:
     name: Release Dry-Run
+    needs: build
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     steps:
@@ -64,6 +65,7 @@ jobs:
 
   release:
     name: Release
+    needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -74,6 +76,8 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 
+      - name: Create staging repositories
+        run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
       - name: Run JReleaser
         uses: jreleaser/release-action@v2
         env:

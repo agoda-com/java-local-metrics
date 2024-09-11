@@ -9,7 +9,7 @@ project:
   java:
     groupId: io.agodadev
     artifactId: testmetrics
-    version: 11
+    version: "11"
   maintainers:
     - joeldickson
   copyright: 2024 Agoda
@@ -20,7 +20,7 @@ release:
     name: testmetrics
 
 signing:
-  active: always
+  active: ALWAYS
   armored: true
 
 distributions:
