@@ -6,7 +6,6 @@ on:
 env:
   JAVA_VERSION: 11
   MAJOR_MINOR_VERSION: 0.1.
-  VERSION_NUMBER: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
 
 jobs:
   build:
@@ -36,14 +35,14 @@ jobs:
     if: github.ref != 'refs/heads/master'
     steps:
       - name: Create staging repositories
-        run: ./gradlew -Pversion=${{ env.VERSION_NUMBER }} publish
+        run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
 
       - name: Run JReleaser
         uses: jreleaser/release-action@v2
         with:
           arguments: full-release --dry-run
         env:
-          JRELEASER_PROJECT_VERSION: ${{ env.VERSION_NUMBER }}
+          JRELEASER_PROJECT_VERSION: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
