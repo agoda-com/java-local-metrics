@@ -1,7 +1,7 @@
 project:
   name: testmetrics
   description: A library for measuring and improving developer experience on local workstations.
-  version: 0.0.1
+  # version: taken from env.JRELEASER_PROJECT_VERSION
   authors:
     - Joel Dickson
   license: Apache-2.0
@@ -24,7 +24,7 @@ release:
 signing:
   active: always
   armored: true
-  # mode: FILE
+  mode: FILE
   # passphrase:
   # publicKey:
   # secretKey:
@@ -33,7 +33,7 @@ distributions:
   app:
     type: JAVA_BINARY
     artifacts:
-      - path: build/libs/testmetrics-0.0.1.jar
+      - path: build/libs/{{projectName}}-{{projectVersion}}.jar
 
 deploy:
   maven:
