@@ -1,7 +1,6 @@
 project:
   name: testmetrics
   description: A library for measuring and improving developer experience on local workstations.
-  # version: taken from env.JRELEASER_PROJECT_VERSION
   authors:
     - Joel Dickson
   license: Apache-2.0
@@ -19,14 +18,10 @@ release:
   github:
     owner: agodadev
     name: testmetrics
-  #  token: {{ GITHUB_TOKEN }}
 
 signing:
   active: always
   armored: true
-  # passphrase:
-  # publicKey:
-  # secretKey:
 
 distributions:
   app:

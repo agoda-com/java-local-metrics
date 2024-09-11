@@ -1,8 +1,8 @@
+/** avoid using 'org.jreleaser' gradle plugins since it's conflict with target Java 11 version */
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-//    id 'org.jreleaser' version '1.12.0' // unable to use, conflict with JVM dependency version
 }
 
 group = 'io.agodadev'
@@ -13,7 +13,7 @@ java {
     withJavadocJar()
     withSourcesJar()
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)  // Use Java 11
+        languageVersion = JavaLanguageVersion.of(11)  // To compatible with lib consumer
     }
 }
 
