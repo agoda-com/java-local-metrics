@@ -4,6 +4,8 @@
 
 The Developer Experience Metrics Library is an open-source Java tool designed to measure and improve the developer experience on local workstations. By providing insights into test execution, build times, and system resource usage, this library helps development teams identify bottlenecks, optimize workflows, and enhance overall productivity.
 
+check published latest version at **[Maven Central](https://central.sonatype.com/artifact/io.agodadev/testmetrics)**
+
 ## Features
 
 - **Test Execution Metrics**: Capture detailed information about JUnit test runs, including execution time, pass/fail status, and system resource usage during tests.
@@ -22,7 +24,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>io.agodadev.testmetrics</groupId>
     <artifactId>dev-experience-metrics</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.x</version>
 </dependency>
 ```
 
@@ -31,7 +33,7 @@ Add the following dependency to your `pom.xml`:
 Add the following to your `build.gradle`:
 
 ```gradle
-implementation 'io.agodadev.testmetrics:dev-experience-metrics:1.0.0'
+implementation 'io.agodadev.testmetrics:dev-experience-metrics:1.0.x'
 ```
 
 ## Quick Start
