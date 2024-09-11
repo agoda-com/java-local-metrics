@@ -5,6 +5,7 @@ on:
 
 env:
   JAVA_VERSION: 11
+  JAVA_DISTRIBUTION: "adopt"
   MAJOR_MINOR_VERSION: 0.1.
 
 jobs:
@@ -12,16 +13,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
+      - uses: actions/checkout@v4
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: "adopt"
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Build
         run: ./gradlew clean build
@@ -30,10 +27,17 @@ jobs:
         run: ./gradlew test
 
   release-dryrun:
-    name: Release
+    name: Release Dry-Run
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/master'
     steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+
       - name: Create staging repositories
         run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
 
@@ -63,8 +67,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: Create staging repositories
-        run: ./gradlew -Pversion=${{ env.VERSION_NUMBER }} publish
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Run JReleaser
         uses: jreleaser/release-action@v2
