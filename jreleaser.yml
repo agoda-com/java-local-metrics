@@ -25,14 +25,14 @@ release:
   github:
     owner: agodadev
     name: testmetrics
-    token: {{ secrets.GITHUB_TOKEN }}
+#    token: {{ GITHUB_TOKEN }}
 
 signing:
   active: always
   armored: true
-  passphrase: {{ secrets.GPG_SIGNING_PASSWORD }}
-  publicKey: {{ secrets.GPG_PUBLIC_KEY }}
-  secretKey: {{ secrets.GPG_SECRET_KEY }}
+#  passphrase: {{ secrets.GPG_SIGNING_PASSWORD }}
+#  publicKey: {{ secrets.GPG_PUBLIC_KEY }}
+#  secretKey: {{ secrets.GPG_SECRET_KEY }}
 #  key:
 #    id: {{ secrets.GPG_SIGNING_KEY_ID }}
 #    passphrase: {{ secrets.GPG_SIGNING_PASSWORD }}
@@ -61,3 +61,14 @@ distributions:
 #      snapshotUrl: https://s01.oss.sonatype.org/content/repositories/snapshots/
 #      username: {{ secrets.OSSRH_USERNAME }}
 #      password: {{ secrets.OSSRH_TOKEN }}
+
+deploy:
+  maven:
+    nexus2:
+      maven-central:
+        active: ALWAYS
+        url: https://s01.oss.sonatype.org/service/local
+        closeRepository: true
+        releaseRepository: false
+        stagingRepositories:
+          - target/staging-deploy
