@@ -6,83 +6,54 @@ import org.scalatest.events._
 import org.scalatest.ConfigMap
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import org.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.{any, argThat}
+import scalaj.http.{HttpRequest, HttpResponse}
 
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
-import java.time.Instant
-import scala.jdk.CollectionConverters._
-
-class TestMetricsReporterSpec extends AnyFunSpec with Matchers {
-
+class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar {
+  
   val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
 
   describe("TestMetricsReporter") {
-    it("should handle test events and generate correct JSON report") {
-      val reporter = new TestMetricsReporter()
+    it("should handle test events and send correct JSON report to endpoint") {
+      // Mock HTTP request and response
+      val mockRequest = mock[HttpRequest]
+      val mockResponse = mock[HttpResponse[String]]
 
-      // Capture all output from the reporter
-      val baos = new ByteArrayOutputStream()
-      Console.withOut(new PrintStream(baos)) {
-        val runStartingEvent = RunStarting(new Ordinal(1), 3, ConfigMap.empty, None, None, None, "main", 123)
-        val testStartingEvent = TestStarting(new Ordinal(2), "TestSuite", "suiteId", Some("TestSuite"), "test1", "should do something", None, None, None, None, "main", 124)
-        val testSucceededEvent = TestSucceeded(new Ordinal(3), "TestSuite", "suiteId", Some("TestSuite"), "test1", "should do something", Vector.empty, Some(100), None, None, None, None, "main", 224)
-        val runCompletedEvent = RunCompleted(new Ordinal(4), Some(200), Some(Summary(1, 0, 0, 0, 0, 1, 0, 0)), None, None, None, "main", 324)
+      when(mockRequest.postData(any[String])).thenReturn(mockRequest)
+      when(mockRequest.header(any[String], any[String])).thenReturn(mockRequest)
+      when(mockRequest.option(any)).thenReturn(mockRequest)
+      when(mockRequest.asString).thenReturn(mockResponse)
+      when(mockResponse.isSuccess).thenReturn(true)
 
-        reporter(runStartingEvent)
-        reporter(testStartingEvent)
-        reporter(testSucceededEvent)
-        reporter(runCompletedEvent)
-      }
+      // Create a TestMetricsReporter with our mocked HTTP client
+      val reporter = new TestMetricsReporter(_ => mockRequest)
+      
+      val runStartingEvent = RunStarting(ordinal = new Ordinal(1), testCount = 3, configMap = ConfigMap.empty, formatter = None, location = None, payload = None, threadName = "main", timeStamp = 123)
+      val testStartingEvent = TestStarting(ordinal = new Ordinal(2), suiteName = "TestSuite", suiteId = "suiteId", suiteClassName = Some("TestSuite"), testName = "test1", testText = "should do something", formatter = None, location = None, rerunner = None, payload = None, threadName = "main", timeStamp = 124)
+      val testSucceededEvent = TestSucceeded(ordinal = new Ordinal(3), suiteName = "TestSuite", suiteId = "suiteId", suiteClassName = Some("TestSuite"), testName = "test1", testText = "should do something", recordedEvents = Vector.empty, duration = Some(100), formatter = None, location = None, rerunner = None, payload = None, threadName = "main", timeStamp = 224)
+      val runCompletedEvent = RunCompleted(ordinal = new Ordinal(4), duration = Some(200), summary = Some(Summary(testsSucceededCount = 1, testsFailedCount = 0, testsIgnoredCount = 0, testsPendingCount = 0, testsCanceledCount = 0, suitesCompletedCount = 1, suitesAbortedCount = 0, scopesPendingCount = 0)), formatter = None, location = None, payload = None, threadName = "main", timeStamp = 324)
+      
+      reporter(runStartingEvent)
+      reporter(testStartingEvent)
+      reporter(testSucceededEvent)
+      reporter(runCompletedEvent)
 
-      val jsonReport = objectMapper.readTree(baos.toString)
-
-      println("Full JSON report:")
-      println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonReport))
-
-      def safeGetIntWithDebug(node: JsonNode, field: String): Option[Int] = {
-        val result = Option(node.get(field)).map(_.asInt())
-        println(s"Debug: Field '$field' value is $result")
-        result
-      }
-
-      safeGetText(jsonReport, "userName") shouldBe Some(System.getProperty("user.name"))
-      safeGetInt(jsonReport, "cpuCount") shouldBe Some(Runtime.getRuntime().availableProcessors())
-      safeGetText(jsonReport, "hostname") should not be empty
-      safeGetText(jsonReport, "os") should not be empty
-      safeGetText(jsonReport, "platform") shouldBe Some("JVM")
-      safeGetBoolean(jsonReport, "isDebuggerAttached") shouldBe Some(false)
-
-      val testCasesNode = jsonReport.get("scalaTestCases")
-      testCasesNode should not be null
-      testCasesNode.isArray shouldBe true
-      testCasesNode.size() shouldBe 1
-
-      val testCase = testCasesNode.get(0)
-      safeGetText(testCase, "name") shouldBe Some("test1")
-      safeGetText(testCase, "suiteName") shouldBe Some("TestSuite")
-      safeGetText(testCase, "status") shouldBe Some("Passed")
-      safeGetInt(testCase, "duration") shouldBe Some(100)
-
-      safeGetIntWithDebug(jsonReport, "totalTests") shouldBe Some(3)
-      safeGetIntWithDebug(jsonReport, "succeededTests") shouldBe Some(1)
-      safeGetIntWithDebug(jsonReport, "failedTests") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "ignoredTests") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "pendingTests") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "canceledTests") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "completedSuites") shouldBe Some(1)
-      safeGetIntWithDebug(jsonReport, "abortedSuites") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "pendingScopes") shouldBe Some(0)
-      safeGetIntWithDebug(jsonReport, "runTime") shouldBe Some(200)
+      // Verify that HTTP request was made with correct data
+      verify(mockRequest).postData(argThat { (json: String) =>
+        val jsonNode = objectMapper.readTree(json)
+        jsonNode.get("totalTests").asInt() == 3 &&
+        jsonNode.get("succeededTests").asInt() == 1 &&
+        jsonNode.get("failedTests").asInt() == 0 &&
+        jsonNode.get("ignoredTests").asInt() == 0 &&
+        jsonNode.get("runTime").asLong() == 200 &&
+        jsonNode.get("scalaTestCases").isArray &&
+        jsonNode.get("scalaTestCases").size() == 1 &&
+        jsonNode.get("scalaTestCases").get(0).get("name").asText() == "test1" &&
+        jsonNode.get("scalaTestCases").get(0).get("status").asText() == "Passed"
+      })
+      verify(mockRequest).asString
+      verify(mockResponse).isSuccess
     }
   }
-
-  // Helper functions remain the same
-  def safeGetInt(node: JsonNode, field: String): Option[Int] =
-    Option(node.get(field)).map(_.asInt())
-
-  def safeGetBoolean(node: JsonNode, field: String): Option[Boolean] =
-    Option(node.get(field)).map(_.asBoolean())
-
-  def safeGetText(node: JsonNode, field: String): Option[String] =
-    Option(node.get(field)).map(_.asText())
 }

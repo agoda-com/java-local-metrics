@@ -11,8 +11,10 @@ import java.time.Instant
 import java.util.UUID
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
+import scalaj.http.HttpRequest
 
-class TestMetricsReporter extends Reporter {
+
+class TestMetricsReporter(httpClient: String => HttpRequest = Http.apply) extends Reporter {
   private val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
   private val testCases = mutable.Map[String, TestCaseInfo]()
   private var suiteStartTime: Instant = _
@@ -113,7 +115,7 @@ class TestMetricsReporter extends Reporter {
   private def sendReportToEndpoint(jsonReport: ObjectNode): Unit = {
     val jsonString = objectMapper.writeValueAsString(jsonReport)
     Try {
-      val response = Http(endpointUrl)
+      val response = httpClient(endpointUrl)
         .postData(jsonString)
         .header("Content-Type", "application/json")
         .header("Charset", "UTF-8")
