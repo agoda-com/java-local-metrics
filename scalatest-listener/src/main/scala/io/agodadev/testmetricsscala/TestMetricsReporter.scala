@@ -1,16 +1,19 @@
-package io.agodadev.testmetricsscala
+package io.agodadev.testmetrics
 
 import org.scalatest.Reporter
 import org.scalatest.events._
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.{ArrayNode, ObjectNode}
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import scalaj.http.{Http, HttpOptions}
 
 import java.time.Instant
 import java.util.UUID
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 class TestMetricsReporter extends Reporter {
-  private val objectMapper = new ObjectMapper()
+  private val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
   private val testCases = mutable.Map[String, TestCaseInfo]()
   private var suiteStartTime: Instant = _
   private var totalTests: Int = 0
@@ -18,15 +21,17 @@ class TestMetricsReporter extends Reporter {
   private var failedTests: Int = 0
   private var ignoredTests: Int = 0
 
+  private val endpointUrl = sys.env.getOrElse("BUILD_METRICS_ES_ENDPOINT", "http://compilation-metrics/scalatest")
+
   case class TestCaseInfo(
-                           id: String,
-                           name: String,
-                           suiteName: String,
-                           status: String,
-                           startTime: Instant,
-                           endTime: Instant = Instant.now(),
-                           duration: Long = 0
-                         )
+    id: String,
+    name: String,
+    suiteName: String,
+    status: String,
+    startTime: Instant,
+    endTime: Instant = Instant.now(),
+    duration: Long = 0
+  )
 
   override def apply(event: Event): Unit = event match {
     case RunStarting(ordinal, testCount, configMap, formatter, location, payload, threadName, timeStamp) =>
@@ -52,7 +57,7 @@ class TestMetricsReporter extends Reporter {
 
     case RunCompleted(ordinal, duration, summary, formatter, location, payload, threadName, timeStamp) =>
       val jsonReport = generateJsonReport(summary.getOrElse(Summary(0, 0, 0, 0, 0, 0, 0, 0)), duration)
-      println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonReport))
+      sendReportToEndpoint(jsonReport)
 
     case _ => // Ignore other events
   }
@@ -103,6 +108,26 @@ class TestMetricsReporter extends Reporter {
     rootNode.put("runId", UUID.randomUUID().toString)
 
     rootNode
+  }
+
+  private def sendReportToEndpoint(jsonReport: ObjectNode): Unit = {
+    val jsonString = objectMapper.writeValueAsString(jsonReport)
+    Try {
+      val response = Http(endpointUrl)
+        .postData(jsonString)
+        .header("Content-Type", "application/json")
+        .header("Charset", "UTF-8")
+        .option(HttpOptions.readTimeout(10000))
+        .asString
+      if (response.isSuccess) {
+        println(s"Successfully sent report to $endpointUrl")
+      } else {
+        println(s"Failed to send report. Status code: ${response.code}, Body: ${response.body}")
+      }
+    } match {
+      case Success(_) => // Do nothing, already logged
+      case Failure(exception) => println(s"Exception when sending report: ${exception.getMessage}")
+    }
   }
 
   private def determinePlatform(): String = {
