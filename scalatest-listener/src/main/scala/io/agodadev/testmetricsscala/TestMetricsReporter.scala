@@ -1,4 +1,4 @@
-package io.agodadev.testmetrics
+package io.agodadev.testmetricsscala
 
 import org.scalatest.Reporter
 import org.scalatest.events._

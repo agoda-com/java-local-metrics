@@ -2,7 +2,7 @@ name := "scala-test-metrics"
 organization := "io.agodadev"
 version := "0.1.0-SNAPSHOT"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.14"
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.15",
