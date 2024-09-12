@@ -38,13 +38,20 @@ implementation 'io.agodadev.testmetrics:dev-experience-metrics:1.0.x'
 
 ## Quick Start
 
-
 ### 1. Configure JUnit Listener
 
 Add the following VM option to your JUnit run configuration:
 
-```
+```shell
 -Djunit.runner.addListeners=io.agodadev.testmetrics.LocalCollectionTestRunListener
+```
+
+### 1. Configure ScalaTest Listener
+
+In the "VM parameters" field add:
+
+```shell
+-Dscalatest.reporters=io.agodadev.testmetrics-scala.TestMetricsReporter
 ```
 
 ## Contributing
