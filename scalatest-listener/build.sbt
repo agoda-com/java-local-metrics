@@ -10,4 +10,4 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.0"
 )
 
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetrics-scala.TestMetricsReporter")
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
