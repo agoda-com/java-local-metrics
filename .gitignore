@@ -30,3 +30,5 @@ build/
 out/
 .metals/
 .bloop/
+.metals/metals.lock.db
+.metals/metals.mv.db

@@ -13,8 +13,7 @@ import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 import scalaj.http.HttpRequest
 
-
-class TestMetricsReporter(httpClient: String => HttpRequest = Http.apply) extends Reporter {
+class TestMetricsReporter extends Reporter {
   private val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
   private val testCases = mutable.Map[String, TestCaseInfo]()
   private var suiteStartTime: Instant = _
@@ -34,6 +33,8 @@ class TestMetricsReporter(httpClient: String => HttpRequest = Http.apply) extend
     endTime: Instant = Instant.now(),
     duration: Long = 0
   )
+
+  protected def createHttpRequest(url: String): HttpRequest = Http(url)
 
   override def apply(event: Event): Unit = event match {
     case RunStarting(ordinal, testCount, configMap, formatter, location, payload, threadName, timeStamp) =>
@@ -115,7 +116,7 @@ class TestMetricsReporter(httpClient: String => HttpRequest = Http.apply) extend
   private def sendReportToEndpoint(jsonReport: ObjectNode): Unit = {
     val jsonString = objectMapper.writeValueAsString(jsonReport)
     Try {
-      val response = httpClient(endpointUrl)
+      val response = createHttpRequest(endpointUrl)
         .postData(jsonString)
         .header("Content-Type", "application/json")
         .header("Charset", "UTF-8")

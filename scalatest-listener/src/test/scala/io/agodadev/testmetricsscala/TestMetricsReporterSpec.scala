@@ -27,7 +27,9 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       when(mockResponse.isSuccess).thenReturn(true)
 
       // Create a TestMetricsReporter with our mocked HTTP client
-      val reporter = new TestMetricsReporter(_ => mockRequest)
+      val reporter = new TestMetricsReporter {
+        override protected def createHttpRequest(url: String): HttpRequest = mockRequest
+      }
       
       val runStartingEvent = RunStarting(ordinal = new Ordinal(1), testCount = 3, configMap = ConfigMap.empty, formatter = None, location = None, payload = None, threadName = "main", timeStamp = 123)
       val testStartingEvent = TestStarting(ordinal = new Ordinal(2), suiteName = "TestSuite", suiteId = "suiteId", suiteClassName = Some("TestSuite"), testName = "test1", testText = "should do something", formatter = None, location = None, rerunner = None, payload = None, threadName = "main", timeStamp = 124)
@@ -40,7 +42,7 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       reporter(runCompletedEvent)
 
       // Verify that HTTP request was made with correct data
-      verify(mockRequest).postData(argThat { (json: String) =>
+      verify(mockRequest).postData(argThat { json: String =>
         val jsonNode = objectMapper.readTree(json)
         jsonNode.get("totalTests").asInt() == 3 &&
         jsonNode.get("succeededTests").asInt() == 1 &&
