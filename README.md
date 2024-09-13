@@ -1,24 +1,34 @@
-# Developer Experience Metrics Library
+# java-local-metrics: Measure Your F5 Experience!
 
 ## Overview
 
-The Developer Experience Metrics Library is an open-source Java tool designed to measure and improve the developer experience on local workstations. By providing insights into test execution, build times, and system resource usage, this library helps development teams identify bottlenecks, optimize workflows, and enhance overall productivity.
+Welcome to java-local-metrics, the open-source library that's here to make your development experience smoother than a fresh jar of skippy! We're all about measuring and improving the developer experience on local workstations, because let's face it, waiting for your tests to run is about as fun as watching paint dry.
 
-check published latest version at **[Maven Central](https://central.sonatype.com/artifact/io.agodadev/testmetrics)**
+By providing insights into test execution, build times, and system resource usage, this library helps development teams identify bottlenecks, optimize workflows, and enhance overall productivity. Because who doesn't want to be more productive while writing Java, Kotlin, and Scala?
+
+What is the F5 Experience? have a read [here](https://beerandserversdontmix.com/2024/08/15/an-introduction-to-the-f5-experience/)
+
+## Latest Versions
+
+Check out our latest versions. They're fresher than your morning coffee!
+
+- **[Maven Central JUnit](https://central.sonatype.com/artifact/io.agodadev/testmetrics)**
+- **[Maven Central Scalatest](https://central.sonatype.com/artifact/io.agodadev/scala-test-metrics)**
 
 ## Features
 
-- **Test Execution Metrics**: Capture detailed information about JUnit test runs, including execution time, pass/fail status, and system resource usage during tests.
+- **Test Execution Metrics**: Capture detailed information about JUnit and ScalaTest runs, including execution time, pass/fail status, and system resource usage during tests. It's like a fitbit for your tests!
+- **The F5 Experience**: We're all about that smooth, fast development cycle. Press F5 and watch your productivity soar!
 
 ## Requirements
 
-Minimum Java Version 11
+Minimum Java Version: 11 (Because we believe in moving forward, not living in the past)
 
 ## Installation
 
-### Maven
+### Maven (For Java and Kotlin)
 
-Add the following dependency to your `pom.xml`:
+Add this to your `pom.xml`. It's like seasoning for your project!
 
 ```xml
 <dependency>
@@ -28,36 +38,59 @@ Add the following dependency to your `pom.xml`:
 </dependency>
 ```
 
-### Gradle
+### Gradle (For Java and Kotlin)
 
-Add the following to your `build.gradle`:
+Spice up your `build.gradle` with this:
 
 ```gradle
 implementation 'io.agodadev.testmetrics:dev-experience-metrics:1.0.x'
 ```
 
+### Scala
+
+Add some flavor to your `build.sbt`:
+
+```scala
+libraryDependencies ++= Seq(
+  // other dependencies here
+  "io.agodadev" %% "scala-test-metrics" % "1.0.x",
+  // other dependencies here
+)
+```
+
 ## Quick Start
 
-### 1. Configure JUnit Listener
+### For JUnit Lovers
 
-Add the following VM option to your JUnit run configuration:
+Add this VM option to your JUnit run configuration. It's like giving your tests a superpower!
 
 ```shell
 -Djunit.runner.addListeners=io.agodadev.testmetrics.LocalCollectionTestRunListener
 ```
 
-### 1. Configure ScalaTest Listener
+### For ScalaTest Enthusiasts
 
-In the "VM parameters" field add:
+In the "VM parameters" field, add this magic incantation:
 
 ```shell
--Dscalatest.reporters=io.agodadev.testmetrics-scala.TestMetricsReporter
+-Dscalatest.reporters=io.agodadev.testmetricsscala.TestMetricsReporter
 ```
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+We welcome contributions! Whether you're fixing bugs, improving documentation, or adding new features, we appreciate your help in making java-local-metrics even better. Check out our [Contributing Guide](CONTRIBUTING.md) for more details on how to get started.
 
----
+Remember, in the world of java-local-metrics, there are no stupid questions, only stupid build times!
 
-Happy coding, and may your development experience be ever improving!
+## The F5 Experience
+
+We're all about that F5 Experience here at java-local-metrics. Our goal is to make your development process smoother than a freshly waxed surfboard. Here's what that means for you:
+
+1. **Setup Should Be a Breeze**: You should be able to clone the repo and get up and running faster than you can say "Java-Kotlin-Scala".
+2. **Fast Feedback Loop**: We want our tests to run faster than a caffeinated squirrel. If you find yourself waiting for tests, something's wrong.
+
+## And Finally...
+
+Remember, in software development, there are only two types of projects: those that are measuring their build times, and those that are not finished yet. With java-local-metrics, you'll always know exactly how long you're waiting for your tests. (Spoiler alert: with our help, it won't be long!)
+
+Happy coding, and may your F5 key never wear out! 🚀

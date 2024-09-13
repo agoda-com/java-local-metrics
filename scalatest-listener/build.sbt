@@ -1,6 +1,6 @@
 import xerial.sbt.Sonatype._
 
-name := "scala-test-metrics"
+name := "testmetricsscala"
 organization := "io.agodadev"
 version := "0.1.0-SNAPSHOT"
 
@@ -22,11 +22,11 @@ publishMavenStyle := true
 publishTo := sonatypePublishToBundle.value
 sonatypeProjectHosting := Some(GitHubHosting("agoda-com", "scala-test-metrics", "maven@agoda.com"))
 licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-homepage := Some(url("https://github.com/agoda-com/scala-test-metrics"))
+homepage := Some(url("https://github.com/agoda-com/java-local-metrics"))
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/agoda-com/scala-test-metrics"),
-    "scm:git@github.com:agoda-com/scala-test-metrics.git"
+    url("https://github.com/agoda-com/java-local-metrics"),
+    "scm:git@github.com:agoda-com/java-local-metrics.git"
   )
 )
 developers := List(
