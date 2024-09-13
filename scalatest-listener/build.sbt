@@ -1,3 +1,5 @@
+import xerial.sbt.Sonatype._
+
 name := "scala-test-metrics"
 organization := "io.agodadev"
 version := "0.1.0-SNAPSHOT"
@@ -14,3 +16,28 @@ libraryDependencies ++= Seq(
 )
 
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
+
+// Maven Central publishing settings
+publishMavenStyle := true
+publishTo := sonatypePublishToBundle.value
+sonatypeProjectHosting := Some(GitHubHosting("agoda-com", "scala-test-metrics", "maven@agoda.com"))
+licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+homepage := Some(url("https://github.com/agoda-com/scala-test-metrics"))
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/agoda-com/scala-test-metrics"),
+    "scm:git@github.com:agoda-com/scala-test-metrics.git"
+  )
+)
+developers := List(
+  Developer(
+    id    = "joeldickson",
+    name  = "Joel Dickson",
+    email = "maven@agoda.com",
+    url   = url("http://beerandserversdontmix.com")
+  )
+)
+
+// PGP signing settings
+usePgpKeyHex("849F9D2E")
+pgpPassphrase := sys.env.get("GPG_PASSPHRASE").map(_.toArray)

@@ -37,6 +37,21 @@ jobs:
       working-directory: scalatest-listener
       run: sbt compile
 
+    - name: Import GPG key
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
+      working-directory: scalatest-listener
+      run: |
+        echo "$GPG_PRIVATE_KEY" | gpg --import --batch
+
+    - name: Publish to Maven Central
+      env:
+          SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      working-directory: scalatest-listener
+      run: sbt publishSigned sonatypeBundleRelease
+
     # Optional: Add a step to publish the artifact if needed
     # - name: Publish artifact
     #   working-directory: scalatest-listener
