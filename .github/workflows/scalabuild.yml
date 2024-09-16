@@ -41,6 +41,7 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
         working-directory: scalatest-listener
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch
