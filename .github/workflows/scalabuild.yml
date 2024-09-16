@@ -37,18 +37,15 @@ jobs:
         working-directory: scalatest-listener
         run: sbt compile
 
-      - name: Import GPG key
+      - name: Prepare and Signed Artifact
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
-        working-directory: scalatest-listener
-        run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --import --batch
-
-      - name: Signed Artifact
-        env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         working-directory: scalatest-listener
         run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch
+          mkdir -p $HOME/.sbt/gpg
+          echo "$GPG_PRIVATE_KEY" > HOME/.sbt/gpg/secring.asc
           sbt publishSigned
           ls target/sonatype-staging
 
