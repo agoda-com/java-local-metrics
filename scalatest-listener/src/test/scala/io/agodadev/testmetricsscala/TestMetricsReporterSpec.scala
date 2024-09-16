@@ -9,6 +9,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import org.mockito.MockitoSugar
 import org.mockito.ArgumentMatchers.{any, argThat}
 import scalaj.http.{HttpRequest, HttpResponse}
+import scalaj.http.HttpOptions.HttpOption
 
 class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar {
   
@@ -22,7 +23,7 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
 
       when(mockRequest.postData(any[String])).thenReturn(mockRequest)
       when(mockRequest.header(any[String], any[String])).thenReturn(mockRequest)
-      when(mockRequest.option(any)).thenReturn(mockRequest)
+      when(mockRequest.option(any[HttpOption]())).thenReturn(mockRequest)
       when(mockRequest.asString).thenReturn(mockResponse)
       when(mockResponse.isSuccess).thenReturn(true)
 
