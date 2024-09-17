@@ -2,55 +2,65 @@ name: Scala CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
 
-    - name: Cache sbt
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.sbt
-          ~/.ivy2/cache
-          ~/.coursier/cache/v1
-          ~/.cache/coursier/v1
-        key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+      - name: Cache sbt
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.sbt
+            ~/.ivy2/cache
+            ~/.coursier/cache/v1
+            ~/.cache/coursier/v1
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
 
-    - name: Run tests
-      working-directory: scalatest-listener
-      run: sbt test
+      - name: Run tests
+        working-directory: scalatest-listener
+        run: sbt test
 
-    - name: Build project
-      working-directory: scalatest-listener
-      run: sbt compile
+      - name: Build project
+        working-directory: scalatest-listener
+        run: sbt compile
 
-    - name: Import GPG key
-      env:
-        GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
-      working-directory: scalatest-listener
-      run: |
-        echo "$GPG_PRIVATE_KEY" | gpg --import --batch
+      - name: Prepare and Signed Artifact
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+        working-directory: scalatest-listener
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch
+          echo "$GPG_PUBLIC_KEY" | gpg --import --batch
+          gpg --list-keys
+          gpg --list-secret-keys
+          mkdir -p $HOME/.sbt/gpg
+          gpg --export-secret-keys --armor > $HOME/.sbt/gpg/secring.asc
+          sbt publishSigned
+          ls target/sonatype-staging
 
-    - name: Publish to Maven Central
-      env:
+      - name: Publish to Maven Central
+        env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      working-directory: scalatest-listener
-      run: sbt publishSigned sonatypeBundleRelease
+        working-directory: scalatest-listener
+        run: |
+          curl --version
+          base64 --version
 
     # Optional: Add a step to publish the artifact if needed
     # - name: Publish artifact

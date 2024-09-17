@@ -27,7 +27,7 @@ distributions:
   app:
     type: JAVA_BINARY
     artifacts:
-      - path: build/libs/{{projectName}}-{{projectVersion}}.jar
+      - path: junit-listener/build/libs/{{projectName}}-{{projectVersion}}.jar
 
 deploy:
   maven:
@@ -36,4 +36,4 @@ deploy:
         active: ALWAYS
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
-          - build/staging-deploy
+          - junit-listener/build/staging-deploy

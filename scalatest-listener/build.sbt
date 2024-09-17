@@ -2,9 +2,11 @@ import xerial.sbt.Sonatype._
 
 name := "testmetricsscala"
 organization := "io.agodadev"
-version := "0.1.0-SNAPSHOT"
+version := "0.0.1"
 
-scalaVersion := "2.13.14"
+// scalaVersion := "2.12.19"
+
+versionScheme := Some("early-semver")
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.15",
@@ -39,5 +41,5 @@ developers := List(
 )
 
 // PGP signing settings
-usePgpKeyHex("849F9D2E")
+useGpg := false
 pgpPassphrase := sys.env.get("GPG_PASSPHRASE").map(_.toArray)

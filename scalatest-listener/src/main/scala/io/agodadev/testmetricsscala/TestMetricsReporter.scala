@@ -22,7 +22,7 @@ class TestMetricsReporter extends Reporter {
   private var failedTests: Int = 0
   private var ignoredTests: Int = 0
 
-  private val endpointUrl = sys.env.getOrElse("BUILD_METRICS_ES_ENDPOINT", "http://compilation-metrics/scalatest")
+  private val endpointUrl = sys.env.getOrElse("BUILD_METRICS_ES_ENDPOINT", "http://compilation-metrics/scala/scalatest")
 
   case class TestCaseInfo(
     id: String,
