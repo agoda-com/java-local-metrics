@@ -86,6 +86,16 @@ class TestMetricsReporter extends Reporter {
     rootNode.put("projectName", "YourProjectName") // You might want to make this configurable
     rootNode.put("isDebuggerAttached", java.lang.management.ManagementFactory.getRuntimeMXBean.getInputArguments.toString.contains("-agentlib:jdwp"))
 
+    // Add Git context information
+    Try(GitContextReader.getGitContext()) match {
+      case Success(gitContext) =>
+        rootNode.put("repositoryUrl", gitContext.repositoryUrl)
+        rootNode.put("repositoryName", gitContext.repositoryName)
+        rootNode.put("branch", gitContext.branchName)
+      case Failure(ex) =>
+        println(s"Failed to get Git context: ${ex.getMessage}")
+    }
+
     val testCasesNode = rootNode.putArray("scalaTestCases")
     testCases.values.foreach { testCase =>
       val testCaseNode = testCasesNode.addObject()
