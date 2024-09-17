@@ -61,7 +61,7 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           PUBLISH_TYPE_PARAMS: AUTOMATIC
-          BUNDLE_NAME: io.agodadev.scala-test-metrics
+          BUNDLE_NAME: io.agodadev.testmetricsscala
         working-directory: scalatest-listener
         run: |
           AUTH_TOKEN=$(echo -n "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
