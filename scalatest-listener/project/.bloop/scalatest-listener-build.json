@@ -19,15 +19,15 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.8.2/sbt-1.8.2.jar",
             "/Users/tvichiansakd/.sbt/boot/scala-2.12.17/lib/scala-library.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/sbt-bloop_2.12_1.0/1.6.0/sbt-bloop-1.6.0.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/sbt-pgp/scala_2.12/sbt_1.0/2.0.1/jars/sbt-pgp.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/xerial/sbt/sbt-sonatype_2.12_1.0/3.9.7/sbt-sonatype-3.9.7.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/sbt-pgp_2.12_1.0/2.1.2/sbt-pgp-2.1.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.8.2/main_2.12-1.8.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.8.0/io_2.12-1.8.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/bloop-config_2.12/2.0.2/bloop-config_2.12-2.0.2.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/pgp-library_2.12/2.0.1/jars/pgp-library_2.12.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/sonatype/spice/zapper/spice-zapper/1.3/spice-zapper-1.3.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-http_2.12/21.3.0/airframe-http_2.12-21.3.0.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/pgp-library_2.12/2.1.2/pgp-library_2.12-2.1.2.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.8.2/logic_2.12-1.8.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.8.2/actions_2.12-1.8.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.8.2/main-settings_2.12-1.8.2.jar",
@@ -53,10 +53,6 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.12/2.4.0/jsoniter-scala-core_2.12-2.4.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/unroll-annotation_2.12/0.1.12/unroll-annotation_2.12-0.1.12.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/16.0.1/guava-16.0.1.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.3.5/httpclient-4.3.5.jar",
@@ -70,6 +66,10 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-codec_2.12/21.3.0/airframe-codec_2.12-21.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-launcher_2.12/21.3.0/airframe-launcher_2.12-21.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.9.0/scala-collection-compat_2.12-2.9.0.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.8.2/util-relation_2.12-1.8.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.8.2/completion_2.12-1.8.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.8.2/task-system_2.12-1.8.2.jar",
@@ -101,10 +101,6 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/jcraft/jsch/0.1.54/jsch-0.1.54.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.7.0/gigahorse-apache-http_2.12-0.7.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-a8f9eb5bf09d0539ea3658a2c2d4e09755b5133e/ivy-2.3.0-sbt-a8f9eb5bf09d0539ea3658a2c2d4e09755b5133e.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.6.1/ssl-config-core_2.12-0.6.1.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-codec/commons-codec/1.6/commons-codec-1.6.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar",
@@ -113,6 +109,10 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-log_2.12/21.3.0/airframe-log_2.12-21.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-msgpack_2.12/21.3.0/airframe-msgpack_2.12-21.3.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-metrics_2.12/21.3.0/airframe-metrics_2.12-21.3.0.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.6.1/ssl-config-core_2.12-0.6.1.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-reader/3.19.0/jline-reader-3.19.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-builtins/3.19.0/jline-builtins-3.19.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.8.2/test-agent-1.8.2.jar",
@@ -128,9 +128,9 @@
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.10.1/zero-allocation-hashing-0.10.1.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/2.1.0/jansi-2.1.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpasyncclient/0.7.0/shaded-apache-httpasyncclient-0.7.0.jar",
-            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/msgpack/msgpack-core/0.8.22/msgpack-core-0.8.22.jar",
+            "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/jline/jline-style/3.19.0/jline-style-3.19.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.8.0/zinc-persist-core-assembly-1.8.0.jar",
             "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_2.12/0.5.1/sbinary_2.12-0.5.1.jar"
@@ -178,8 +178,8 @@
                 "import _root_.sbt._",
                 "import _root_.sbt.Keys._",
                 "import _root_.sbt.nio.Keys._",
-                "import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._, _root_.bloop.integrations.sbt.BloopPlugin.autoImport._, _root_.com.jsuereth.sbtpgp.SbtPgp.autoImport._, _root_.xerial.sbt.Sonatype.autoImport._",
-                "import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin, _root_.bloop.integrations.sbt.BloopPlugin, _root_.com.jsuereth.sbtpgp.SbtPgp, _root_.xerial.sbt.Sonatype"
+                "import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._, _root_.bloop.integrations.sbt.BloopPlugin.autoImport._, _root_.xerial.sbt.Sonatype.autoImport._, _root_.com.jsuereth.sbtpgp.SbtPgp.autoImport._",
+                "import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin, _root_.bloop.integrations.sbt.BloopPlugin, _root_.xerial.sbt.Sonatype, _root_.com.jsuereth.sbtpgp.SbtPgp"
             ]
         },
         "test": {
@@ -251,20 +251,16 @@
             "classpath": [
                 "/Users/tvichiansakd/projects/java-local-metrics/scalatest-listener/project/.bloop/scalatest-listener-build/scala-2.12/sbt-1.0/classes",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/sbt-bloop_2.12_1.0/1.6.0/sbt-bloop-1.6.0.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/sbt-pgp/scala_2.12/sbt_1.0/2.0.1/jars/sbt-pgp.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/xerial/sbt/sbt-sonatype_2.12_1.0/3.9.7/sbt-sonatype-3.9.7.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/sbt-pgp_2.12_1.0/2.1.2/sbt-pgp-2.1.2.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/bloop-config_2.12/2.0.2/bloop-config_2.12-2.0.2.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/pgp-library_2.12/2.0.1/jars/pgp-library_2.12.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/sonatype/spice/zapper/spice-zapper/1.3/spice-zapper-1.3.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-http_2.12/21.3.0/airframe-http_2.12-21.3.0.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/pgp-library_2.12/2.1.2/pgp-library_2.12-2.1.2.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.12/2.4.0/jsoniter-scala-core_2.12-2.4.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/lihaoyi/unroll-annotation_2.12/0.1.12/unroll-annotation_2.12-0.1.12.jar",
                 "/Users/tvichiansakd/.sbt/boot/scala-2.12.17/lib/scala-library.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.3.0/gigahorse-core_2.12-0.3.0.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/16.0.1/guava-16.0.1.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.3.5/httpclient-4.3.5.jar",
@@ -278,10 +274,10 @@
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-codec_2.12/21.3.0/airframe-codec_2.12-21.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-launcher_2.12/21.3.0/airframe-launcher_2.12-21.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.4.2/scala-collection-compat_2.12-2.4.2.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.2.2/ssl-config-core_2.12-0.2.2.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.0/reactive-streams-1.0.0.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.3.0/gigahorse-core_2.12-0.3.0.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-codec/commons-codec/1.6/commons-codec-1.6.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar",
@@ -291,9 +287,13 @@
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-log_2.12/21.3.0/airframe-log_2.12-21.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-msgpack_2.12/21.3.0/airframe-msgpack_2.12-21.3.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-metrics_2.12/21.3.0/airframe-metrics_2.12-21.3.0.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.2.0/config-1.2.0.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.2.2/ssl-config-core_2.12-0.2.2.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.0/reactive-streams-1.0.0.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar",
                 "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar",
-                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/msgpack/msgpack-core/0.8.22/msgpack-core-0.8.22.jar"
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/msgpack/msgpack-core/0.8.22/msgpack-core-0.8.22.jar",
+                "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.2.0/config-1.2.0.jar"
             ]
         },
         "resolution": {
@@ -316,23 +316,6 @@
                     ]
                 },
                 {
-                    "organization": "com.jsuereth",
-                    "name": "sbt-pgp",
-                    "version": "2.0.1",
-                    "configurations": "compile",
-                    "artifacts": [
-                        {
-                            "name": "sbt-pgp",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/sbt-pgp/scala_2.12/sbt_1.0/2.0.1/jars/sbt-pgp.jar"
-                        },
-                        {
-                            "name": "sbt-pgp",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/sbt-pgp/scala_2.12/sbt_1.0/2.0.1/srcs/sbt-pgp-sources.jar"
-                        }
-                    ]
-                },
-                {
                     "organization": "org.xerial.sbt",
                     "name": "sbt-sonatype",
                     "version": "3.9.7",
@@ -350,6 +333,23 @@
                     ]
                 },
                 {
+                    "organization": "com.github.sbt",
+                    "name": "sbt-pgp",
+                    "version": "2.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "sbt-pgp",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/sbt-pgp_2.12_1.0/2.1.2/sbt-pgp-2.1.2.jar"
+                        },
+                        {
+                            "name": "sbt-pgp",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/sbt-pgp_2.12_1.0/2.1.2/sbt-pgp-2.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
                     "organization": "ch.epfl.scala",
                     "name": "bloop-config_2.12",
                     "version": "2.0.2",
@@ -363,40 +363,6 @@
                             "name": "bloop-config_2.12",
                             "classifier": "sources",
                             "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/bloop-config_2.12/2.0.2/bloop-config_2.12-2.0.2-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "com.jsuereth",
-                    "name": "pgp-library_2.12",
-                    "version": "2.0.1",
-                    "configurations": "compile",
-                    "artifacts": [
-                        {
-                            "name": "pgp-library_2.12",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/pgp-library_2.12/2.0.1/jars/pgp-library_2.12.jar"
-                        },
-                        {
-                            "name": "pgp-library_2.12",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.jsuereth/pgp-library_2.12/2.0.1/srcs/pgp-library_2.12-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "com.eed3si9n",
-                    "name": "gigahorse-okhttp_2.12",
-                    "version": "0.3.0",
-                    "configurations": "default",
-                    "artifacts": [
-                        {
-                            "name": "gigahorse-okhttp_2.12",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar"
-                        },
-                        {
-                            "name": "gigahorse-okhttp_2.12",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0-sources.jar"
                         }
                     ]
                 },
@@ -431,6 +397,40 @@
                             "name": "airframe-http_2.12",
                             "classifier": "sources",
                             "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-http_2.12/21.3.0/airframe-http_2.12-21.3.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.github.sbt",
+                    "name": "pgp-library_2.12",
+                    "version": "2.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "pgp-library_2.12",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/pgp-library_2.12/2.1.2/pgp-library_2.12-2.1.2.jar"
+                        },
+                        {
+                            "name": "pgp-library_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/sbt/pgp-library_2.12/2.1.2/pgp-library_2.12-2.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.eed3si9n",
+                    "name": "gigahorse-okhttp_2.12",
+                    "version": "0.3.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "gigahorse-okhttp_2.12",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0.jar"
+                        },
+                        {
+                            "name": "gigahorse-okhttp_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-okhttp_2.12/0.3.0/gigahorse-okhttp_2.12-0.3.0-sources.jar"
                         }
                     ]
                 },
@@ -482,57 +482,6 @@
                             "name": "scala-library",
                             "classifier": "sources",
                             "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.17/scala-library-2.12.17-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "org.bouncycastle",
-                    "name": "bcpg-jdk15on",
-                    "version": "1.60",
-                    "configurations": "default",
-                    "artifacts": [
-                        {
-                            "name": "bcpg-jdk15on",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar"
-                        },
-                        {
-                            "name": "bcpg-jdk15on",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "org.scala-lang.modules",
-                    "name": "scala-parser-combinators_2.12",
-                    "version": "1.1.2",
-                    "configurations": "default",
-                    "artifacts": [
-                        {
-                            "name": "scala-parser-combinators_2.12",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
-                        },
-                        {
-                            "name": "scala-parser-combinators_2.12",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "com.squareup.okhttp3",
-                    "name": "okhttp",
-                    "version": "3.7.0",
-                    "configurations": "default",
-                    "artifacts": [
-                        {
-                            "name": "okhttp",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar"
-                        },
-                        {
-                            "name": "okhttp",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0-sources.jar"
                         }
                     ]
                 },
@@ -725,35 +674,52 @@
                 },
                 {
                     "organization": "org.bouncycastle",
-                    "name": "bcprov-jdk15on",
+                    "name": "bcpg-jdk15on",
                     "version": "1.60",
                     "configurations": "default",
                     "artifacts": [
                         {
-                            "name": "bcprov-jdk15on",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar"
+                            "name": "bcpg-jdk15on",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60.jar"
                         },
                         {
-                            "name": "bcprov-jdk15on",
+                            "name": "bcpg-jdk15on",
                             "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60-sources.jar"
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/1.60/bcpg-jdk15on-1.60-sources.jar"
                         }
                     ]
                 },
                 {
-                    "organization": "com.squareup.okio",
-                    "name": "okio",
-                    "version": "1.12.0",
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_2.12",
+                    "version": "1.1.2",
                     "configurations": "default",
                     "artifacts": [
                         {
-                            "name": "okio",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar"
+                            "name": "scala-parser-combinators_2.12",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2.jar"
                         },
                         {
-                            "name": "okio",
+                            "name": "scala-parser-combinators_2.12",
                             "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0-sources.jar"
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.okhttp3",
+                    "name": "okhttp",
+                    "version": "3.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "okhttp",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0.jar"
+                        },
+                        {
+                            "name": "okhttp",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/3.7.0/okhttp-3.7.0-sources.jar"
                         }
                     ]
                 },
@@ -907,6 +873,40 @@
                             "name": "airframe-metrics_2.12",
                             "classifier": "sources",
                             "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/wvlet/airframe/airframe-metrics_2.12/21.3.0/airframe-metrics_2.12-21.3.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.bouncycastle",
+                    "name": "bcprov-jdk15on",
+                    "version": "1.60",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "bcprov-jdk15on",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60.jar"
+                        },
+                        {
+                            "name": "bcprov-jdk15on",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.60/bcprov-jdk15on-1.60-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.squareup.okio",
+                    "name": "okio",
+                    "version": "1.12.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "okio",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0.jar"
+                        },
+                        {
+                            "name": "okio",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/squareup/okio/okio/1.12.0/okio-1.12.0-sources.jar"
                         }
                     ]
                 },
@@ -1387,23 +1387,6 @@
                     ]
                 },
                 {
-                    "organization": "com.eed3si9n",
-                    "name": "gigahorse-core_2.12",
-                    "version": "0.7.0",
-                    "configurations": "default",
-                    "artifacts": [
-                        {
-                            "name": "gigahorse-core_2.12",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0.jar"
-                        },
-                        {
-                            "name": "gigahorse-core_2.12",
-                            "classifier": "sources",
-                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0-sources.jar"
-                        }
-                    ]
-                },
-                {
                     "organization": "org.slf4j",
                     "name": "slf4j-api",
                     "version": "1.7.36",
@@ -1434,6 +1417,23 @@
                             "name": "scala-collection-compat_2.12",
                             "classifier": "sources",
                             "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.9.0/scala-collection-compat_2.12-2.9.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.eed3si9n",
+                    "name": "gigahorse-core_2.12",
+                    "version": "0.7.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "gigahorse-core_2.12",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0.jar"
+                        },
+                        {
+                            "name": "gigahorse-core_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/tvichiansakd/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0-sources.jar"
                         }
                     ]
                 },
