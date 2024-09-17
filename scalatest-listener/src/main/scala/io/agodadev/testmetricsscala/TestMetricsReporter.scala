@@ -77,7 +77,12 @@ class TestMetricsReporter extends Reporter {
 
   private def generateJsonReport(summary: Summary, duration: Option[Long]): ObjectNode = {
     val rootNode = objectMapper.createObjectNode()
-    rootNode.put("id", UUID.randomUUID().toString)
+    // Update runId logic to check for CI_JOB_ID
+    val runId = sys.env.get("CI_JOB_ID") match {
+      case Some(ciJobId) if ciJobId.nonEmpty => ciJobId
+      case _ => UUID.randomUUID().toString
+    }
+    rootNode.put("id", runId)
 
     // Update username logic to check for GITLAB_USER_LOGIN
     val userName = sys.env.get("GITLAB_USER_LOGIN") match {
