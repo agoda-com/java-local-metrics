@@ -47,9 +47,9 @@ jobs:
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch
           echo "$GPG_PUBLIC_KEY" | gpg --import --batch
           gpg --list-keys
-          gpg --list-secret-keys
+          gpg --version
           mkdir -p $HOME/.sbt/gpg
-          gpg --export-secret-keys --armor > $HOME/.sbt/gpg/secring.asc
+          gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt publishSigned
           ls target/sonatype-staging
 
