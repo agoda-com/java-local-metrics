@@ -48,9 +48,8 @@ jobs:
           echo "$GPG_PUBLIC_KEY" | gpg --import --batch
           gpg --list-keys
           gpg --list-secret-keys
-          echo $HOME/.sbt/gpg
           mkdir -p $HOME/.sbt/gpg
-          # echo "$GPG_PRIVATE_KEY" > $HOME/.sbt/gpg/secring.asc
+          echo "$GPG_PRIVATE_KEY" > $HOME/.sbt/gpg/secring.asc
           sbt publishSigned
           ls target/sonatype-staging
 
