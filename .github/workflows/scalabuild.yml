@@ -45,6 +45,8 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+          BUNDLE_VERSION_NUMBER: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
+          BUNDLE_PATH: ./target/sonatype-staging/0.1.0-SNAPSHOT
         working-directory: scalatest-listener
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch
@@ -52,6 +54,7 @@ jobs:
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt publishSigned
+          cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
 
       - name: Publish to Maven Central
         env:
@@ -59,15 +62,12 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           PUBLISH_TYPE_PARAMS: AUTOMATIC
           BUNDLE_NAME: io.agodadev.scala-test-metrics
-          BUNDLE_PATH: target/sonatype-staging/0.1.0-SNAPSHOT
-          BUNDLE_VERSION_NUMBER: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
         working-directory: scalatest-listener
         run: |
-          zip -r bundle.zip ${BUNDLE_PATH}
           AUTH_TOKEN=$(echo -n "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
           curl --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
-            --header "Authorization: ${AUTH_TOKEN}" \
-            --form "bundle=@bundle.zip" \
+            --header "Authorization: Bearer ${AUTH_TOKEN}" \
+            --form "bundle=@${GITHUB_WORKSPACE}/bundle.zip" \
             --form "name=${BUNDLE_NAME}"
 
     # Optional: Add a step to publish the artifact if needed
