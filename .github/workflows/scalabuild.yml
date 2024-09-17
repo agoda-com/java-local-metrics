@@ -49,7 +49,7 @@ jobs:
           gpg --list-keys
           gpg --list-secret-keys
           mkdir -p $HOME/.sbt/gpg
-          echo "$GPG_PRIVATE_KEY" > $HOME/.sbt/gpg/secring.asc
+          gpg --export-secret-keys --armor > $HOME/.sbt/gpg/secring.asc
           sbt publishSigned
           ls target/sonatype-staging
 
