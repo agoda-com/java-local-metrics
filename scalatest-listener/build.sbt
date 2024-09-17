@@ -2,7 +2,7 @@ import xerial.sbt.Sonatype._
 
 name := "testmetricsscala"
 organization := "io.agodadev"
-version := "0.0.2"
+version := sys.env.get("BUNDLE_VERSION_NUMBER").getOrElse("0.1.0")
 
 // scalaVersion := "2.12.19"
 
