@@ -37,13 +37,14 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           BUNDLE_VERSION_NUMBER: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
-          BUNDLE_PATH: ./target/sonatype-staging/0.1.0-SNAPSHOT
+          BUNDLE_PATH: ./target/sonatype-staging
         working-directory: scalatest-listener
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch
           echo "$GPG_PUBLIC_KEY" | gpg --import --batch
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
+          sbt +publishSigned
           cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
       - name: Publish to Maven Central
         env:
