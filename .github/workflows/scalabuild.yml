@@ -68,9 +68,9 @@ jobs:
             --form "name=${BUNDLE_NAME}" \
             --write-out "%{http_code}" \
             --silent --output /dev/null)
-          
-          if [ $RESPONSE -eq 200 ]; then
-            echo "Successfully published to Maven Central"
+            
+          if [ $RESPONSE -eq 200 ] || [ $RESPONSE -eq 201 ]; then
+            echo "Successfully published to Maven Central. HTTP status code: $RESPONSE"
           else
             echo "Failed to publish to Maven Central. HTTP status code: $RESPONSE"
             exit 1
