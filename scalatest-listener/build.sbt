@@ -2,10 +2,12 @@ import xerial.sbt.Sonatype._
 
 name := "testmetricsscala"
 organization := "io.agodadev"
+
+// Cross-compile settings
+crossScalaVersions := Seq("2.12.19", "2.13.12")
+scalaVersion := "2.13.12"
+
 version := sys.env.get("BUNDLE_VERSION_NUMBER").getOrElse("0.1.0")
-
-// scalaVersion := "2.12.19"
-
 versionScheme := Some("early-semver")
 
 libraryDependencies ++= Seq(
@@ -17,7 +19,7 @@ libraryDependencies ++= Seq(
   "org.mockito" %% "mockito-scala-scalatest" % "1.17.12" % Test
 )
 
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
+Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
 
 // Maven Central publishing settings
 publishMavenStyle := true
@@ -43,3 +45,8 @@ developers := List(
 // PGP signing settings
 useGpgPinentry := true
 pgpPassphrase := sys.env.get("GPG_PASSPHRASE").map(_.toArray)
+
+// Add these settings for cross-building
+releaseCrossBuild := true
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
