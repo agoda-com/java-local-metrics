@@ -45,7 +45,7 @@ jobs:
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt +publishSigned
-          cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
+          cd $BUNDLE_PATH && zip -r ${BUNDLE_PATH}/bundle.zip .
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -58,7 +58,8 @@ jobs:
           ls -al
           ls target -al
           ls target/sonatype-staging -al
-          BUNDLE_FILE=$(find target -name "*.zip" | head -n 1)
+          ls .. -al
+          BUNDLE_FILE=$(find . -name "*.zip" | head -n 1)
           if [ -z "$BUNDLE_FILE" ]; then
             echo "Error: No bundle file found"
             exit 1
