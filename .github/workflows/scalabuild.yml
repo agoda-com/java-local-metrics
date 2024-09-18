@@ -56,7 +56,9 @@ jobs:
         run: |
           pwd
           ls -al
-          BUNDLE_FILE=$(find target/sonatype-staging -name "*.zip" | head -n 1)
+          ls target -al
+          ls target/sonatype-staging -al
+          BUNDLE_FILE=$(find target -name "*.zip" | head -n 1)
           if [ -z "$BUNDLE_FILE" ]; then
             echo "Error: No bundle file found"
             exit 1
