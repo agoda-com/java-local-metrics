@@ -44,7 +44,6 @@ jobs:
           echo "$GPG_PUBLIC_KEY" | gpg --import --batch
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
-          sbt +publishSigned
           cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
       - name: Publish to Maven Central
         env:
