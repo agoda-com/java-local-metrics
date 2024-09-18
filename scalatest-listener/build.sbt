@@ -1,6 +1,6 @@
 import xerial.sbt.Sonatype._
 
-name := "testmetricsscala"
+name := "scala-test-metrics"
 organization := "io.agodadev"
 
 // Cross-compile settings
@@ -47,6 +47,9 @@ useGpgPinentry := true
 pgpPassphrase := sys.env.get("GPG_PASSPHRASE").map(_.toArray)
 
 // Add these settings for cross-building
-releaseCrossBuild := true
+crossPaths := true
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+
+// Ensure that the Sonatype bundle includes artifacts for all Scala versions
+sonatypeBundleDirectory := (ThisBuild / baseDirectory).value / "target" / "sonatype-staging"
