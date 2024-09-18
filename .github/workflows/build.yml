@@ -21,9 +21,11 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Build
+        working-directory: junit-listener
         run: ./gradlew clean build
 
       - name: Test
+        working-directory: junit-listener
         run: ./gradlew test
 
   release-dryrun:
@@ -40,6 +42,7 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Create staging repositories
+        working-directory: junit-listener
         run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
 
       - name: Run JReleaser
@@ -77,6 +80,7 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Create staging repositories
+        working-directory: junit-listener
         run: ./gradlew -Pversion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }} publish
       - name: Run JReleaser
         uses: jreleaser/release-action@v2
