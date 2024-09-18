@@ -1,27 +1,21 @@
 name: Scala CI
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 env:
   MAJOR_MINOR_VERSION: 0.1.
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: "11"
           distribution: "adopt"
-
       - name: Cache sbt
         uses: actions/cache@v2
         with:
@@ -31,56 +25,53 @@ jobs:
             ~/.coursier/cache/v1
             ~/.cache/coursier/v1
           key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
-
       - name: Run tests
         working-directory: scalatest-listener
-        run: sbt test
-
+        run: sbt +test
       - name: Build project
         working-directory: scalatest-listener
-        run: sbt compile
-
-      - name: Prepare and Signed Artifact
+        run: sbt +compile
+      - name: Prepare and Sign Artifact
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_SECRET_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
           BUNDLE_VERSION_NUMBER: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
-          BUNDLE_PATH: ./target/sonatype-staging/0.1.0-SNAPSHOT
+          BUNDLE_PATH: ./target/sonatype-staging
         working-directory: scalatest-listener
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch
           echo "$GPG_PUBLIC_KEY" | gpg --import --batch
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
-          sbt publishSigned
+          sbt +publishSigned
           cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
-
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           PUBLISH_TYPE_PARAMS: AUTOMATIC
-          BUNDLE_NAME: io.agodadev.testmetricsscala
+          BUNDLE_NAME: io.agodadev.scala-test-metrics
         working-directory: scalatest-listener
         run: |
+          BUNDLE_FILE=$(find .. -name "bundle.zip" | head -n 1)
+          if [ -z "$BUNDLE_FILE" ]; then
+            echo "Error: No bundle file found"
+            exit 1
+          fi
+          echo "Found bundle file: $BUNDLE_FILE"
+          
           AUTH_TOKEN=$(echo -n "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
-          curl --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
-            --header "Authorization: Bearer ${AUTH_TOKEN}" \
-            --form "bundle=@${GITHUB_WORKSPACE}/bundle.zip" \
-            --form "name=${BUNDLE_NAME}"
-
-    # Optional: Add a step to publish the artifact if needed
-    # - name: Publish artifact
-    #   working-directory: scalatest-listener
-    #   run: sbt publish
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # Optional: Add a step to generate and publish code coverage report
-    # - name: Generate code coverage report
-    #   working-directory: scalatest-listener
-    #   run: sbt coverage test coverageReport
-    #
-    # - name: Publish code coverage
-    #   uses: codecov/codecov-action@v1
+          RESPONSE=$(curl --fail --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
+            --header "Authorization: Basic ${AUTH_TOKEN}" \
+            --form "bundle=@${BUNDLE_FILE}" \
+            --form "name=${BUNDLE_NAME}" \
+            --write-out "%{http_code}" \
+            --silent --output /dev/null)
+            
+          if [ $RESPONSE -eq 200 ] || [ $RESPONSE -eq 201 ]; then
+            echo "Successfully published to Maven Central. HTTP status code: $RESPONSE"
+          else
+            echo "Failed to publish to Maven Central. HTTP status code: $RESPONSE"
+            exit 1
+          fi
