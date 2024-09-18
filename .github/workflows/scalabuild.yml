@@ -44,6 +44,7 @@ jobs:
           mkdir -p $HOME/.sbt/gpg
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt +publishSigned
+          sbt sonatypeBundleRelease
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -52,8 +53,24 @@ jobs:
           BUNDLE_NAME: io.agodadev.scala-test-metrics
         working-directory: scalatest-listener
         run: |
+          BUNDLE_FILE=$(find target/sonatype-staging -name "*.zip" | head -n 1)
+          if [ -z "$BUNDLE_FILE" ]; then
+            echo "Error: No bundle file found"
+            exit 1
+          fi
+          echo "Found bundle file: $BUNDLE_FILE"
+          
           AUTH_TOKEN=$(echo -n "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
-          curl --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
-            --header "Authorization: Bearer ${AUTH_TOKEN}" \
-            --form "bundle=@target/sonatype-staging/bundle.zip" \
-            --form "name=${BUNDLE_NAME}"
+          RESPONSE=$(curl --fail --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
+            --header "Authorization: Basic ${AUTH_TOKEN}" \
+            --form "bundle=@${BUNDLE_FILE}" \
+            --form "name=${BUNDLE_NAME}" \
+            --write-out "%{http_code}" \
+            --silent --output /dev/null)
+          
+          if [ $RESPONSE -eq 200 ]; then
+            echo "Successfully published to Maven Central"
+          else
+            echo "Failed to publish to Maven Central. HTTP status code: $RESPONSE"
+            exit 1
+          fi
