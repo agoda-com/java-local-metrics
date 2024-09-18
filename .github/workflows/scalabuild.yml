@@ -54,6 +54,8 @@ jobs:
           BUNDLE_NAME: io.agodadev.scala-test-metrics
         working-directory: scalatest-listener
         run: |
+          pwd
+          ls -al
           BUNDLE_FILE=$(find target/sonatype-staging -name "*.zip" | head -n 1)
           if [ -z "$BUNDLE_FILE" ]; then
             echo "Error: No bundle file found"

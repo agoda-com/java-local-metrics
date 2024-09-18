@@ -56,6 +56,8 @@ libraryDependencies ++= Seq(
   "io.agodadev" %% "scala-test-metrics" % "1.0.x",
   // other dependencies here
 )
+
+Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
 ```
 
 ## Quick Start
@@ -66,14 +68,6 @@ Add this VM option to your JUnit run configuration. It's like giving your tests 
 
 ```shell
 -Djunit.runner.addListeners=io.agodadev.testmetrics.LocalCollectionTestRunListener
-```
-
-### For ScalaTest Enthusiasts
-
-In the "VM parameters" field, add this magic incantation:
-
-```shell
--Dscalatest.reporters=io.agodadev.testmetricsscala.TestMetricsReporter
 ```
 
 ## Contributing
