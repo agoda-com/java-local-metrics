@@ -89,7 +89,13 @@ public abstract class LocalCollectionTestRunListener extends RunListener {
     public void testRunFinished(Result result) throws Exception {
         ObjectNode rootNode = objectMapper.createObjectNode();
         rootNode.put("id", UUID.randomUUID().toString());
-        rootNode.put("userName", System.getProperty("user.name"));
+        // Set username, use GITLAB_USER_LOGIN if available, so in CI we tag the user that triggered the build
+        // This allows us to compare who is push code and correlate to fi they are running tests locally or relying on CI
+        String username = System.getenv("GITLAB_USER_LOGIN");
+        if (username == null || username.isEmpty()) {
+            username = System.getProperty("user.name");
+        }
+        rootNode.put("userName", username);
         rootNode.put("cpuCount", Runtime.getRuntime().availableProcessors());
         rootNode.put("hostname", InetAddress.getLocalHost().getHostName());
         rootNode.put("os", System.getProperty("os.name"));
