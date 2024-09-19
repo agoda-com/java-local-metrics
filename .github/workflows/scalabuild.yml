@@ -7,7 +7,7 @@ on:
 env:
   MAJOR_MINOR_VERSION: 0.1.
 jobs:
-  build_and_publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
