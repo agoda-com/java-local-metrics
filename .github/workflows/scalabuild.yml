@@ -50,7 +50,7 @@ jobs:
     name: Release
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - name: Publish to Maven Central
         env:
