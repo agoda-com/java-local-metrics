@@ -1,5 +1,4 @@
 package io.agodadev.testmetricsscala
-
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import org.mockito.ArgumentMatchers.{any, argThat}
 import org.scalatest.funspec.AnyFunSpec
@@ -8,7 +7,9 @@ import org.mockito.MockitoSugar
 import org.scalatest.events._
 import scalaj.http.{HttpRequest, HttpResponse}
 import scalaj.http.HttpOptions.HttpOption
-import scala.jdk.CollectionConverters._
+
+// Use scala.collection.JavaConverters for Scala 2.12 compatibility
+import scala.collection.JavaConverters._
 
 class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar {
 
@@ -75,7 +76,12 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       jsonNode.get("runTime").asLong() == 150 &&
       testCases.isArray &&
       testCases.size() == 2 &&
-      testCases.asScala.exists(tc => tc.get("name").asText() == "test1" && tc.get("status").asText() == "Passed") &&
-      testCases.asScala.exists(tc => tc.get("name").asText() == "test2" && tc.get("status").asText() == "Failed")
+      testCasesContain(testCases, "test1", "Passed") &&
+      testCasesContain(testCases, "test2", "Failed")
+  }
+
+  def testCasesContain(testCases: JsonNode, name: String, status: String): Boolean = {
+    // Use JavaConverters for Scala 2.12 compatibility
+    testCases.asScala.exists(tc => tc.get("name").asText() == name && tc.get("status").asText() == status)
   }
 }
