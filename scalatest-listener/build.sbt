@@ -4,7 +4,7 @@ name := "scala-test-metrics"
 organization := "io.agodadev"
 
 // Cross-compile settings
-crossScalaVersions := Seq("2.12.19", "2.13.12")
+crossScalaVersions := Seq("2.12.19", "2.13.12", "2.13.11")
 scalaVersion := "2.13.12"
 
 version := sys.env.get("BUNDLE_VERSION_NUMBER").getOrElse("0.1.0")
