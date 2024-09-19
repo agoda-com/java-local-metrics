@@ -94,7 +94,6 @@ class TestMetricsReporter extends Reporter {
     rootNode.put("hostname", java.net.InetAddress.getLocalHost.getHostName)
     rootNode.put("os", s"${System.getProperty("os.name")} ${System.getProperty("os.version")}")
     rootNode.put("platform", determinePlatform())
-    rootNode.put("projectName", "YourProjectName") // You might want to make this configurable
     rootNode.put("isDebuggerAttached", java.lang.management.ManagementFactory.getRuntimeMXBean.getInputArguments.toString.contains("-agentlib:jdwp"))
 
     // Add Git context information
