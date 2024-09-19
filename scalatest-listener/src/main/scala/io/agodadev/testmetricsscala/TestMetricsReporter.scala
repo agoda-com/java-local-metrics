@@ -25,70 +25,80 @@ class TestMetricsReporter extends Reporter {
   private val endpointUrl = sys.env.getOrElse("BUILD_METRICS_ES_ENDPOINT", "http://compilation-metrics/scala/scalatest")
 
   case class TestCaseInfo(
-    id: String,
-    name: String,
-    suiteName: String,
-    status: String,
-    startTime: Instant,
-    endTime: Instant = Instant.now(),
-    duration: Long = 0
-  )
+                           id: String,
+                           name: String,
+                           suiteName: String,
+                           status: String,
+                           startTime: Instant,
+                           endTime: Instant = Instant.now(),
+                           duration: Long = 0
+                         )
+
+  case class SuiteInfo(
+                        name: String,
+                        startTime: Instant,
+                        testCases: mutable.Map[String, TestCaseInfo] = mutable.Map()
+                      )
+
+  private val suites = mutable.Map[String, SuiteInfo]()
 
   protected def createHttpRequest(url: String): HttpRequest = Http(url)
 
   override def apply(event: Event): Unit = event match {
     case RunStarting(ordinal, testCount, configMap, formatter, location, payload, threadName, timeStamp) =>
-      suiteStartTime = Instant.now()
       totalTests = testCount
+
+    case SuiteStarting(ordinal, suiteName, suiteId, suiteClassName, formatter, location, rerunner, payload, threadName, timeStamp) =>
+      suites += (suiteName -> SuiteInfo(suiteName, Instant.now()))
 
     case TestStarting(ordinal, suiteName, suiteId, suiteClassName, testName, testText, formatter, location, rerunner, payload, threadName, timeStamp) =>
       val testId = UUID.randomUUID().toString
-      testCases += (testId -> TestCaseInfo(testId, testName, suiteName, "Started", Instant.now()))
+      val testInfo = TestCaseInfo(testId, testName, suiteName, "Started", Instant.now())
+      testCases += (testId -> testInfo)
+      suites(suiteName).testCases += (testId -> testInfo)
 
     case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, recordedEvents, duration, formatter, location, rerunner, payload, threadName, timeStamp) =>
-      updateTestCase(testName, "Passed", duration)
+      updateTestCase(suiteName, testName, "Passed", duration)
       succeededTests += 1
 
     case TestFailed(ordinal, message, suiteName, suiteId, suiteClassName, testName, testText, recordedEvents, analysis, throwable, duration, formatter, location, rerunner, payload, threadName, timeStamp) =>
-      updateTestCase(testName, "Failed", duration)
+      updateTestCase(suiteName, testName, "Failed", duration)
       failedTests += 1
 
     case TestIgnored(ordinal, suiteName, suiteId, suiteClassName, testName, testText, formatter, location, payload, threadName, timeStamp) =>
       val testId = UUID.randomUUID().toString
-      testCases += (testId -> TestCaseInfo(testId, testName, suiteName, "Ignored", Instant.now()))
+      val testInfo = TestCaseInfo(testId, testName, suiteName, "Ignored", Instant.now())
+      testCases += (testId -> testInfo)
+      suites(suiteName).testCases += (testId -> testInfo)
       ignoredTests += 1
 
-    case RunCompleted(ordinal, duration, summary, formatter, location, payload, threadName, timeStamp) =>
-      val jsonReport = generateJsonReport(summary.getOrElse(Summary(0, 0, 0, 0, 0, 0, 0, 0)), duration)
+    case SuiteCompleted(ordinal, suiteName, suiteId, suiteClassName, duration, formatter, location, rerunner, payload, threadName, timeStamp) =>
+      val jsonReport = generateJsonReport(suiteName, duration)
       sendReportToEndpoint(jsonReport)
+      // Clear the suite data after sending the report
+      suites.remove(suiteName)
 
     case _ => // Ignore other events
   }
 
-  private def updateTestCase(testName: String, status: String, duration: Option[Long]): Unit = {
-    testCases.find(_._2.name == testName).foreach { case (id, testCase) =>
-      testCases(id) = testCase.copy(
+  private def updateTestCase(suiteName: String, testName: String, status: String, duration: Option[Long]): Unit = {
+    suites(suiteName).testCases.find(_._2.name == testName).foreach { case (id, testCase) =>
+      val updatedTestCase = testCase.copy(
         status = status,
         endTime = Instant.now(),
         duration = duration.getOrElse(0)
       )
+      suites(suiteName).testCases(id) = updatedTestCase
+      testCases(id) = updatedTestCase
     }
   }
 
-  private def generateJsonReport(summary: Summary, duration: Option[Long]): ObjectNode = {
+  private def generateJsonReport(suiteName: String, duration: Option[Long]): ObjectNode = {
     val rootNode = objectMapper.createObjectNode()
-    // Update runId logic to check for CI_JOB_ID
-    val runId = sys.env.get("CI_JOB_ID") match {
-      case Some(ciJobId) if ciJobId.nonEmpty => ciJobId
-      case _ => UUID.randomUUID().toString
-    }
+    val runId = sys.env.getOrElse("CI_JOB_ID", UUID.randomUUID().toString)
     rootNode.put("id", runId)
 
-    // Update username logic to check for GITLAB_USER_LOGIN
-    val userName = sys.env.get("GITLAB_USER_LOGIN") match {
-      case Some(gitlabUser) if gitlabUser.nonEmpty => gitlabUser
-      case _ => System.getProperty("user.name")
-    }
+    val userName = sys.env.getOrElse("GITLAB_USER_LOGIN", System.getProperty("user.name"))
     rootNode.put("userName", userName)
     rootNode.put("cpuCount", Runtime.getRuntime().availableProcessors())
     rootNode.put("hostname", java.net.InetAddress.getLocalHost.getHostName)
@@ -96,7 +106,6 @@ class TestMetricsReporter extends Reporter {
     rootNode.put("platform", determinePlatform())
     rootNode.put("isDebuggerAttached", java.lang.management.ManagementFactory.getRuntimeMXBean.getInputArguments.toString.contains("-agentlib:jdwp"))
 
-    // Add Git context information
     Try(GitContextReader.getGitContext()) match {
       case Success(gitContext) =>
         rootNode.put("repositoryUrl", gitContext.repositoryUrl)
@@ -107,7 +116,8 @@ class TestMetricsReporter extends Reporter {
     }
 
     val testCasesNode = rootNode.putArray("scalaTestCases")
-    testCases.values.foreach { testCase =>
+    val suiteInfo = suites(suiteName)
+    suiteInfo.testCases.values.foreach { testCase =>
       val testCaseNode = testCasesNode.addObject()
       testCaseNode.put("id", testCase.id)
       testCaseNode.put("name", testCase.name)
@@ -118,15 +128,11 @@ class TestMetricsReporter extends Reporter {
       testCaseNode.put("duration", testCase.duration)
     }
 
-    rootNode.put("totalTests", totalTests)
-    rootNode.put("succeededTests", succeededTests)
-    rootNode.put("failedTests", failedTests)
-    rootNode.put("ignoredTests", ignoredTests)
-    rootNode.put("pendingTests", summary.testsPendingCount)
-    rootNode.put("canceledTests", summary.testsCanceledCount)
-    rootNode.put("completedSuites", summary.suitesCompletedCount)
-    rootNode.put("abortedSuites", summary.suitesAbortedCount)
-    rootNode.put("pendingScopes", summary.scopesPendingCount)
+    rootNode.put("suiteName", suiteName)
+    rootNode.put("totalTests", suiteInfo.testCases.size)
+    rootNode.put("succeededTests", suiteInfo.testCases.count(_._2.status == "Passed"))
+    rootNode.put("failedTests", suiteInfo.testCases.count(_._2.status == "Failed"))
+    rootNode.put("ignoredTests", suiteInfo.testCases.count(_._2.status == "Ignored"))
     rootNode.put("runTime", duration.getOrElse(0L))
     rootNode.put("runId", UUID.randomUUID().toString)
 

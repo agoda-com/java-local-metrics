@@ -19,8 +19,6 @@ libraryDependencies ++= Seq(
   "org.mockito" %% "mockito-scala-scalatest" % "1.17.12" % Test
 )
 
-Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-C", "io.agodadev.testmetricsscala.TestMetricsReporter")
-
 // Maven Central publishing settings
 publishMavenStyle := true
 publishTo := sonatypePublishToBundle.value
