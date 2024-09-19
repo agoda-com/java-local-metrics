@@ -46,6 +46,12 @@ jobs:
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt +publishSigned
           cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -60,7 +66,7 @@ jobs:
             exit 1
           fi
           echo "Found bundle file: $BUNDLE_FILE"
-          
+
           AUTH_TOKEN=$(echo -n "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" | base64)
           RESPONSE=$(curl --fail --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
             --header "Authorization: Basic ${AUTH_TOKEN}" \
@@ -75,3 +81,9 @@ jobs:
             echo "Failed to publish to Maven Central. HTTP status code: $RESPONSE"
             exit 1
           fi
+      - name: Verify Published Artifacts
+        env:
+          SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        working-directory: .github/tools
+        run: sh check_publish.sh --namespace io.agodadev --bundle-name scala-test-metrics --bundle-version ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
