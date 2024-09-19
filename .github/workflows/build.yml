@@ -101,6 +101,7 @@ jobs:
           path: |
             out/jreleaser/trace.log
             out/jreleaser/output.properties
+          continue-on-error: true
       - name: Verify Published Artifact
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
