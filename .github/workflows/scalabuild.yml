@@ -46,12 +46,6 @@ jobs:
           gpg --batch --pinentry-mode=loopback --yes --passphrase $GPG_PASSPHRASE --output $HOME/.sbt/gpg/secring.asc --export-secret-key --armor 
           sbt +publishSigned
           cd $BUNDLE_PATH && zip -r ${GITHUB_WORKSPACE}/bundle.zip .
-  release:
-    name: Release
-    needs: build
-    runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main'
-    steps:
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}

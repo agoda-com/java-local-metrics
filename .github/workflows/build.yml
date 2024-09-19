@@ -92,8 +92,7 @@ jobs:
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           JRELEASER_MAVENCENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-        with:
-          arguments: full-release | true
+        continue-on-error: true
       - name: JReleaser release output
         if: always()
         uses: actions/upload-artifact@v4
