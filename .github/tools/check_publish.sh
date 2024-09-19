@@ -2,7 +2,7 @@
 SECONDS=0
 
 # Config
-INTERVAL=10
+INTERVAL=30
 TIMEOUT=600
 
 # Validate SONATYPE credentials

@@ -66,7 +66,7 @@ jobs:
           RESPONSE=$(curl --fail --location "https://central.sonatype.com/api/v1/publisher/upload?publishingType=${PUBLISH_TYPE_PARAMS}" \
             --header "Authorization: Basic ${AUTH_TOKEN}" \
             --form "bundle=@${BUNDLE_FILE}" \
-            --form "name=${BUNDLE_NAME}_${BUNDLE_VERSION_NAME}" \
+            --form "name=${BUNDLE_NAME}_${BUNDLE_VERSION_NUMBER}" \
             --write-out "%{http_code}" \
             --silent --output /dev/null)
             
