@@ -10,9 +10,13 @@ import org.mockito.MockitoSugar
 import org.mockito.ArgumentMatchers.{any, argThat}
 import scalaj.http.{HttpRequest, HttpResponse}
 import scalaj.http.HttpOptions.HttpOption
+import java.util.Base64
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
+import java.util.zip.{GZIPInputStream, GZIPOutputStream}
+import java.nio.charset.StandardCharsets
 
 class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar {
-  
+
   val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
 
   describe("TestMetricsReporter") {
@@ -31,32 +35,41 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       val reporter = new TestMetricsReporter {
         override protected def createHttpRequest(url: String): HttpRequest = mockRequest
       }
-      
+
       val runStartingEvent = RunStarting(ordinal = new Ordinal(1), testCount = 3, configMap = ConfigMap.empty, formatter = None, location = None, payload = None, threadName = "main", timeStamp = 123)
       val testStartingEvent = TestStarting(ordinal = new Ordinal(2), suiteName = "TestSuite", suiteId = "suiteId", suiteClassName = Some("TestSuite"), testName = "test1", testText = "should do something", formatter = None, location = None, rerunner = None, payload = None, threadName = "main", timeStamp = 124)
       val testSucceededEvent = TestSucceeded(ordinal = new Ordinal(3), suiteName = "TestSuite", suiteId = "suiteId", suiteClassName = Some("TestSuite"), testName = "test1", testText = "should do something", recordedEvents = Vector.empty, duration = Some(100), formatter = None, location = None, rerunner = None, payload = None, threadName = "main", timeStamp = 224)
       val runCompletedEvent = RunCompleted(ordinal = new Ordinal(4), duration = Some(200), summary = Some(Summary(testsSucceededCount = 1, testsFailedCount = 0, testsIgnoredCount = 0, testsPendingCount = 0, testsCanceledCount = 0, suitesCompletedCount = 1, suitesAbortedCount = 0, scopesPendingCount = 0)), formatter = None, location = None, payload = None, threadName = "main", timeStamp = 324)
-      
+
       reporter(runStartingEvent)
       reporter(testStartingEvent)
       reporter(testSucceededEvent)
       reporter(runCompletedEvent)
 
       // Verify that HTTP request was made with correct data
-      verify(mockRequest).postData(argThat { json: String =>
-        val jsonNode = objectMapper.readTree(json)
+      verify(mockRequest).postData(argThat { compressedJson: String =>
+        // Decompress the JSON string
+        val decompressedJson = decompress(compressedJson)
+        val jsonNode = objectMapper.readTree(decompressedJson)
         jsonNode.get("totalTests").asInt() == 3 &&
-        jsonNode.get("succeededTests").asInt() == 1 &&
-        jsonNode.get("failedTests").asInt() == 0 &&
-        jsonNode.get("ignoredTests").asInt() == 0 &&
-        jsonNode.get("runTime").asLong() == 200 &&
-        jsonNode.get("scalaTestCases").isArray &&
-        jsonNode.get("scalaTestCases").size() == 1 &&
-        jsonNode.get("scalaTestCases").get(0).get("name").asText() == "test1" &&
-        jsonNode.get("scalaTestCases").get(0).get("status").asText() == "Passed"
+          jsonNode.get("succeededTests").asInt() == 1 &&
+          jsonNode.get("failedTests").asInt() == 0 &&
+          jsonNode.get("ignoredTests").asInt() == 0 &&
+          jsonNode.get("runTime").asLong() == 200 &&
+          jsonNode.get("scalaTestCases").isArray &&
+          jsonNode.get("scalaTestCases").size() == 1 &&
+          jsonNode.get("scalaTestCases").get(0).get("name").asText() == "test1" &&
+          jsonNode.get("scalaTestCases").get(0).get("status").asText() == "Passed"
       })
       verify(mockRequest).asString
       verify(mockResponse).isSuccess
     }
+  }
+
+  // Helper method to decompress the Base64 encoded GZIP string
+  private def decompress(compressedString: String): String = {
+    val bytes = Base64.getDecoder.decode(compressedString)
+    val gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(bytes))
+    scala.io.Source.fromInputStream(gzipInputStream).mkString
   }
 }
