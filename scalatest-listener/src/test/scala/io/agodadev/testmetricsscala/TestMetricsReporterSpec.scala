@@ -10,10 +10,11 @@ import org.mockito.MockitoSugar
 import org.mockito.ArgumentMatchers.{any, argThat}
 import scalaj.http.{HttpRequest, HttpResponse}
 import scalaj.http.HttpOptions.HttpOption
-import java.util.Base64
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
-import java.util.zip.{GZIPInputStream, GZIPOutputStream}
+import java.io.{ByteArrayInputStream}
+import java.util.zip.GZIPInputStream
 import java.nio.charset.StandardCharsets
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar {
 
@@ -25,7 +26,7 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       val mockRequest = mock[HttpRequest]
       val mockResponse = mock[HttpResponse[String]]
 
-      when(mockRequest.postData(any[String])).thenReturn(mockRequest)
+      when(mockRequest.postData(any[Array[Byte]])).thenReturn(mockRequest)
       when(mockRequest.header(any[String], any[String])).thenReturn(mockRequest)
       when(mockRequest.option(any[HttpOption]())).thenReturn(mockRequest)
       when(mockRequest.asString).thenReturn(mockResponse)
@@ -46,10 +47,13 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
       reporter(testSucceededEvent)
       reporter(runCompletedEvent)
 
+      // Wait for the asynchronous operation to complete
+      Thread.sleep(1000) // Adjust this value if needed
+
       // Verify that HTTP request was made with correct data
-      verify(mockRequest).postData(argThat { compressedJson: String =>
-        // Decompress the JSON string
-        val decompressedJson = decompress(compressedJson)
+      verify(mockRequest, timeout(5000)).postData(argThat { compressedData: Array[Byte] =>
+        // Decompress the JSON data
+        val decompressedJson = decompress(compressedData)
         val jsonNode = objectMapper.readTree(decompressedJson)
         jsonNode.get("totalTests").asInt() == 3 &&
           jsonNode.get("succeededTests").asInt() == 1 &&
@@ -66,10 +70,9 @@ class TestMetricsReporterSpec extends AnyFunSpec with Matchers with MockitoSugar
     }
   }
 
-  // Helper method to decompress the Base64 encoded GZIP string
-  private def decompress(compressedString: String): String = {
-    val bytes = Base64.getDecoder.decode(compressedString)
-    val gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(bytes))
+  // Helper method to decompress the GZIP byte array
+  private def decompress(compressedData: Array[Byte]): String = {
+    val gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(compressedData))
     scala.io.Source.fromInputStream(gzipInputStream).mkString
   }
 }

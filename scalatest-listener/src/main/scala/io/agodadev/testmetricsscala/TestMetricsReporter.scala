@@ -149,7 +149,6 @@ class TestMetricsReporter extends Reporter {
           .postData(compressedBody)
           .header("Content-Type", "application/json")
           .header("Content-Encoding", "gzip")
-          .header("Charset", "UTF-8")
           .option(HttpOptions.readTimeout(10000))
           .option(HttpOptions.connTimeout(5000))
           .asString
@@ -165,15 +164,14 @@ class TestMetricsReporter extends Reporter {
     }
   }
 
-  private def compressString(input: String): String = {
+  private def compressString(input: String): Array[Byte] = {
     val outputStream = new ByteArrayOutputStream()
     val gzipOutputStream = new GZIPOutputStream(outputStream)
-    val writer = new OutputStreamWriter(gzipOutputStream, StandardCharsets.UTF_8)
 
-    writer.write(input)
-    writer.close()
+    gzipOutputStream.write(input.getBytes(StandardCharsets.UTF_8))
+    gzipOutputStream.close()
 
-    Base64.getEncoder.encodeToString(outputStream.toByteArray)
+    outputStream.toByteArray
   }
   private def determinePlatform(): String = {
     if (System.getProperty("java.vendor").contains("Android")) "Android"
