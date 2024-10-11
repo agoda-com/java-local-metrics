@@ -8,10 +8,16 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import scalaj.http.{Http, HttpOptions}
 
 import java.time.Instant
-import java.util.UUID
+import java.util.{Base64, UUID}
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
 import scalaj.http.HttpRequest
+
+import java.io.{ByteArrayOutputStream, OutputStreamWriter}
+import java.util.zip.GZIPOutputStream
+import java.nio.charset.StandardCharsets
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 class TestMetricsReporter extends Reporter {
   private val objectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
@@ -135,24 +141,38 @@ class TestMetricsReporter extends Reporter {
 
   private def sendReportToEndpoint(jsonReport: ObjectNode): Unit = {
     val jsonString = objectMapper.writeValueAsString(jsonReport)
-    Try {
-      val response = createHttpRequest(endpointUrl)
-        .postData(jsonString)
-        .header("Content-Type", "application/json")
-        .header("Charset", "UTF-8")
-        .option(HttpOptions.readTimeout(10000))
-        .asString
-      if (response.isSuccess) {
-        println(s"Successfully sent report to $endpointUrl")
-      } else {
-        println(s"Failed to send report. Status code: ${response.code}, Body: ${response.body}")
+    val compressedBody = compressString(jsonString)
+
+    Future {
+      Try {
+        val response = createHttpRequest(endpointUrl)
+          .postData(compressedBody)
+          .header("Content-Type", "application/json")
+          .header("Content-Encoding", "gzip")
+          .option(HttpOptions.readTimeout(10000))
+          .option(HttpOptions.connTimeout(5000))
+          .asString
+        if (response.isSuccess) {
+          println(s"Successfully sent compressed report to $endpointUrl")
+        } else {
+          println(s"Failed to send compressed report. Status code: ${response.code}, Body: ${response.body}")
+        }
+      } match {
+        case Success(_) => // Do nothing, already logged
+        case Failure(exception) => println(s"Exception when sending compressed report: ${exception.getMessage}")
       }
-    } match {
-      case Success(_) => // Do nothing, already logged
-      case Failure(exception) => println(s"Exception when sending report: ${exception.getMessage}")
     }
   }
 
+  private def compressString(input: String): Array[Byte] = {
+    val outputStream = new ByteArrayOutputStream()
+    val gzipOutputStream = new GZIPOutputStream(outputStream)
+
+    gzipOutputStream.write(input.getBytes(StandardCharsets.UTF_8))
+    gzipOutputStream.close()
+
+    outputStream.toByteArray
+  }
   private def determinePlatform(): String = {
     if (System.getProperty("java.vendor").contains("Android")) "Android"
     else if (System.getenv("DOCKER_CONTAINER") != null) "Docker"
